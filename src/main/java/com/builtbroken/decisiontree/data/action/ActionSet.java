@@ -1,6 +1,10 @@
 package com.builtbroken.decisiontree.data.action;
 
+import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.data.IJsonGeneratedObject;
+import com.builtbroken.builder.mapper.anno.JsonConstructor;
+import com.builtbroken.builder.mapper.anno.JsonMapping;
+import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.IAction;
 import com.builtbroken.decisiontree.api.IActionContext;
@@ -13,9 +17,19 @@ import java.util.List;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
+@JsonTemplate(type = DTReferences.JSON_ACTION_SET)
 public class ActionSet extends Action implements IJsonGeneratedObject
 {
+    @JsonMapping(keys = "action", type = ConverterRefs.LIST)
     private final List<IAction> actions = new ArrayList();
+
+    @JsonConstructor()
+    public static ActionSet build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    {
+        ActionSet action = new ActionSet();
+        action.name = name;
+        return action;
+    }
 
     public void sort(Comparator<IAction> comparator)
     {

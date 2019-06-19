@@ -6,7 +6,7 @@ package com.builtbroken.decisiontree.api;
  */
 public interface IAction
 {
-
+    int getPriority();
     /**
      * Called to check if the context can trigger the action
      *
