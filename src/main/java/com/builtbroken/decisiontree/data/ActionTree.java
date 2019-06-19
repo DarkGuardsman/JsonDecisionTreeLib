@@ -7,32 +7,25 @@ import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.IAction;
-import com.builtbroken.decisiontree.api.IActor;
+import com.builtbroken.decisiontree.api.IActionTree;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTOR)
-public class Actor implements IActor, IJsonGeneratedObject
+public class ActionTree implements IActionTree, IJsonGeneratedObject
 {
     private String name;
-
-    private IAction currentAction;
 
     @JsonObjectWiring(jsonFields = "starts", objectType = DTReferences.JSON_ACTION_SET)
     private IAction treeStart;
 
     @JsonConstructor
-    public static Actor build(@JsonMapping(keys = "name", type = "string") String name)
+    public static ActionTree build(@JsonMapping(keys = "name", type = "string") String name)
     {
-        Actor actor = new Actor();
-        actor.name = name;
-        return actor;
-    }
-
-    public void reset()
-    {
-        currentAction = treeStart;
+        ActionTree actionTree = new ActionTree();
+        actionTree.name = name;
+        return actionTree;
     }
 
     @Override
@@ -45,5 +38,11 @@ public class Actor implements IActor, IJsonGeneratedObject
     public String getJsonUniqueID()
     {
         return name;
+    }
+
+    @Override
+    public IAction getEntryPoint()
+    {
+        return treeStart;
     }
 }

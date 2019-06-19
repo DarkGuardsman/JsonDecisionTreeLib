@@ -6,9 +6,9 @@ import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.api.ActionResult;
 import com.builtbroken.decisiontree.api.IAction;
 import com.builtbroken.decisiontree.api.IActionContext;
-import com.builtbroken.decisiontree.data.action.Action;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,8 +20,12 @@ import java.util.List;
 @JsonTemplate(type = DTReferences.JSON_ACTION_SET)
 public class ActionSet extends Action implements IJsonGeneratedObject
 {
+
     @JsonMapping(keys = "action", type = ConverterRefs.LIST)
     private final List<IAction> actions = new ArrayList();
+
+    @JsonMapping(keys = "run_all", type = ConverterRefs.BOOLEAN)
+    private boolean runAll = false;
 
     @JsonConstructor()
     public static ActionSet build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
@@ -49,16 +53,21 @@ public class ActionSet extends Action implements IJsonGeneratedObject
     }
 
     @Override
-    public boolean trigger(IActionContext triggerContext, IActionContext outputContext)
+    public ActionResult start(IActionContext triggerContext, IActionContext outputContext)
     {
         for (IAction action : actions)
         {
-            if (action.trigger(triggerContext, outputContext))
+            ActionResult result = action.start(triggerContext, outputContext);
+            if (!runAll && result != ActionResult.PASS)
             {
-                return true;
+                return result;
+            }
+            else if (result != ActionResult.PASS && result != ActionResult.COMPLETE)
+            {
+                return ActionResult.ERROR; //Run all only works if all complete first tick, as we can only run 1 task at a time
             }
         }
-        return false;
+        return ActionResult.COMPLETE;
     }
 
     @Override

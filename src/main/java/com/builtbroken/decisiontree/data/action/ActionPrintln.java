@@ -5,6 +5,7 @@ import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.api.ActionResult;
 import com.builtbroken.decisiontree.api.IActionContext;
 
 /**
@@ -46,7 +47,7 @@ public class ActionPrintln extends Action
     }
 
     @Override
-    public boolean trigger(IActionContext triggerContext, IActionContext outputContext)
+    public ActionResult start(IActionContext triggerContext, IActionContext outputContext)
     {
         if (lineToPrint != null && lineToPrint.trim().isEmpty())
         {
@@ -57,6 +58,6 @@ public class ActionPrintln extends Action
             System.out.println("Trigger: " + triggerContext);
             System.out.println("Output: " + outputContext);
         }
-        return true;
+        return ActionResult.COMPLETE;
     }
 }
