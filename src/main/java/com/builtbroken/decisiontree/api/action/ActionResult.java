@@ -1,4 +1,4 @@
-package com.builtbroken.decisiontree.api;
+package com.builtbroken.decisiontree.api.action;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.

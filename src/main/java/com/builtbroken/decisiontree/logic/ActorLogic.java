@@ -1,9 +1,8 @@
 package com.builtbroken.decisiontree.logic;
 
-import com.builtbroken.decisiontree.api.ActionResult;
-import com.builtbroken.decisiontree.api.IAction;
-import com.builtbroken.decisiontree.api.context.IActionContext;
-import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.action.ActionResult;
+import com.builtbroken.decisiontree.api.action.IAction;
+import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IActorContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.ActionTree;
@@ -15,6 +14,7 @@ import java.util.function.Consumer;
  */
 public class ActorLogic
 {
+
     public ActionTree tree;
 
     //Information about the actor
@@ -23,7 +23,7 @@ public class ActorLogic
     //Current task
     private IAction currentAction;
 
-    private IActionMemory memory;
+    private IMemoryContext memory;
     private IWorldContext world;
 
     private Consumer<String> errorHandler = (string) -> System.out.println("Error: " + string);
@@ -33,9 +33,10 @@ public class ActorLogic
         this.actorContext = actorContext;
     }
 
-    public void setStage(IWorldContext worldContext, boolean reset)
+    public void setStage(IWorldContext worldContext, IMemoryContext memory, boolean reset)
     {
         this.world = worldContext;
+        this.memory = memory;
         if (reset)
         {
             reset();

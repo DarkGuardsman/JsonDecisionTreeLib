@@ -5,8 +5,9 @@ import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
-import com.builtbroken.decisiontree.api.ActionResult;
-import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.action.ActionResult;
+import com.builtbroken.decisiontree.api.action.IAction;
+import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.action.Action;
 
@@ -14,7 +15,7 @@ import com.builtbroken.decisiontree.data.action.Action;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_PRINT_LINE)
-public class ActionPrintln extends Action
+public class ActionPrintln extends Action<ActionPrintln>
 {
 
     @JsonMapping(keys = "print", type = ConverterRefs.STRING)
@@ -38,7 +39,7 @@ public class ActionPrintln extends Action
     }
 
     @Override
-    public ActionResult start(IWorldContext world, IActionMemory memory)
+    public ActionResult start(IWorldContext world, IMemoryContext memory)
     {
         if (lineToPrint != null && lineToPrint.trim().isEmpty())
         {
@@ -50,5 +51,13 @@ public class ActionPrintln extends Action
             System.out.println("Memory: " + memory);
         }
         return ActionResult.COMPLETE;
+    }
+
+    @Override
+    protected void copyInto(ActionPrintln action)
+    {
+        super.copyInto(action);
+        action.lineToPrint = lineToPrint;
+        action.printContext = printContext;
     }
 }

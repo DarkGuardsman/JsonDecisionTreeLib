@@ -6,21 +6,21 @@ import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
-import com.builtbroken.decisiontree.api.ActionResult;
-import com.builtbroken.decisiontree.api.IAction;
-import com.builtbroken.decisiontree.api.context.IActionContext;
-import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.action.ActionResult;
+import com.builtbroken.decisiontree.api.action.IAction;
+import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_SET)
-public class ActionSet extends Action implements IJsonGeneratedObject
+public class ActionSet extends Action<ActionSet> implements IJsonGeneratedObject
 {
 
     @JsonMapping(keys = "action", type = ConverterRefs.LIST)
@@ -43,7 +43,7 @@ public class ActionSet extends Action implements IJsonGeneratedObject
     }
 
     @Override
-    public ActionResult start(IWorldContext world, IActionMemory memory)
+    public ActionResult start(IWorldContext world, IMemoryContext memory)
     {
         for (IAction action : actions)
         {
@@ -64,5 +64,19 @@ public class ActionSet extends Action implements IJsonGeneratedObject
     public String getJsonType()
     {
         return DTReferences.JSON_ACTION_SET;
+    }
+
+    @Override
+    public void collectActions(Consumer<IAction> collector)
+    {
+        collector.accept(this);
+        actions.forEach(a -> a.collectActions(collector));
+    }
+
+    @Override
+    protected void copyInto(ActionSet action)
+    {
+        super.copyInto(action);
+        actions.forEach(a -> action.actions.add(a.copy()));
     }
 }
