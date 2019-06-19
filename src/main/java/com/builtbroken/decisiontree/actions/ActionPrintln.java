@@ -1,4 +1,4 @@
-package com.builtbroken.decisiontree.data.action;
+package com.builtbroken.decisiontree.actions;
 
 import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
@@ -6,7 +6,9 @@ import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.ActionResult;
-import com.builtbroken.decisiontree.api.IActionContext;
+import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.data.action.Action;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
@@ -14,6 +16,7 @@ import com.builtbroken.decisiontree.api.IActionContext;
 @JsonTemplate(type = DTReferences.JSON_ACTION_PRINT_LINE)
 public class ActionPrintln extends Action
 {
+
     @JsonMapping(keys = "print", type = ConverterRefs.STRING)
     public String lineToPrint = null;
 
@@ -35,19 +38,7 @@ public class ActionPrintln extends Action
     }
 
     @Override
-    public boolean canTrigger(IActionContext triggerContext)
-    {
-        return true;
-    }
-
-    @Override
-    public boolean canAction(IActionContext outputContext)
-    {
-        return true;
-    }
-
-    @Override
-    public ActionResult start(IActionContext triggerContext, IActionContext outputContext)
+    public ActionResult start(IWorldContext world, IActionMemory memory)
     {
         if (lineToPrint != null && lineToPrint.trim().isEmpty())
         {
@@ -55,8 +46,8 @@ public class ActionPrintln extends Action
         }
         if (printContext)
         {
-            System.out.println("Trigger: " + triggerContext);
-            System.out.println("Output: " + outputContext);
+            System.out.println("World: " + world);
+            System.out.println("Memory: " + memory);
         }
         return ActionResult.COMPLETE;
     }

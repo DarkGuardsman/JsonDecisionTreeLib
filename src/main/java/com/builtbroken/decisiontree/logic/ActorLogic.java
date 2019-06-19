@@ -2,7 +2,10 @@ package com.builtbroken.decisiontree.logic;
 
 import com.builtbroken.decisiontree.api.ActionResult;
 import com.builtbroken.decisiontree.api.IAction;
-import com.builtbroken.decisiontree.api.IActionContext;
+import com.builtbroken.decisiontree.api.context.IActionContext;
+import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.context.IActorContext;
+import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.ActionTree;
 
 import java.util.function.Consumer;
@@ -12,15 +15,32 @@ import java.util.function.Consumer;
  */
 public class ActorLogic
 {
-
     public ActionTree tree;
 
+    //Information about the actor
+    private final IActorContext actorContext;
+
+    //Current task
     private IAction currentAction;
 
-    private IActionContext lastActiontTrigger;
-    private IActionContext worldContext;
+    private IActionMemory memory;
+    private IWorldContext world;
 
     private Consumer<String> errorHandler = (string) -> System.out.println("Error: " + string);
+
+    public ActorLogic(IActorContext actorContext)
+    {
+        this.actorContext = actorContext;
+    }
+
+    public void setStage(IWorldContext worldContext, boolean reset)
+    {
+        this.world = worldContext;
+        if (reset)
+        {
+            reset();
+        }
+    }
 
     /**
      * Called to update the actor
@@ -35,7 +55,7 @@ public class ActorLogic
             currentAction = tree.getEntryPoint();
             if (currentAction != null)
             {
-                currentAction.start(lastActiontTrigger, worldContext);
+                currentAction.start(world, memory);
             }
         }
 
@@ -49,17 +69,17 @@ public class ActorLogic
 
     protected boolean doAction(int tick, float delta)
     {
-        final ActionResult result = currentAction.update(lastActiontTrigger, worldContext, tick, delta);
+        final ActionResult result = currentAction.update(world, memory, tick, delta);
         if (result == ActionResult.COMPLETE || result == ActionResult.END)
         {
 
-            //End AI
+            //End AI loop, reset ai
             if (result == ActionResult.END)
             {
                 reset();
                 return true;
             }
-            //End AI loop
+            //End AI loop, but keep current action
             else if (result == ActionResult.STEP)
             {
                 return true;
@@ -78,7 +98,7 @@ public class ActorLogic
 
     protected boolean startAction()
     {
-        final ActionResult result = currentAction.start(lastActiontTrigger, worldContext);
+        final ActionResult result = currentAction.start(world, memory);
         if (result == ActionResult.END)
         {
             reset();
@@ -104,7 +124,7 @@ public class ActorLogic
     protected boolean endAction()
     {
         //Start next action
-        currentAction = currentAction.end(lastActiontTrigger, worldContext);
+        currentAction = currentAction.end(world, memory);
         if (currentAction != null)
         {
             return startAction();

@@ -8,7 +8,9 @@ import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.ActionResult;
 import com.builtbroken.decisiontree.api.IAction;
-import com.builtbroken.decisiontree.api.IActionContext;
+import com.builtbroken.decisiontree.api.context.IActionContext;
+import com.builtbroken.decisiontree.api.context.IActionMemory;
+import com.builtbroken.decisiontree.api.context.IWorldContext;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -41,23 +43,11 @@ public class ActionSet extends Action implements IJsonGeneratedObject
     }
 
     @Override
-    public boolean canTrigger(IActionContext triggerContext)
-    {
-        return actions.stream().anyMatch(a -> a.canTrigger(triggerContext));
-    }
-
-    @Override
-    public boolean canAction(IActionContext outputContext)
-    {
-        return actions.stream().anyMatch(a -> a.canAction(outputContext));
-    }
-
-    @Override
-    public ActionResult start(IActionContext triggerContext, IActionContext outputContext)
+    public ActionResult start(IWorldContext world, IActionMemory memory)
     {
         for (IAction action : actions)
         {
-            ActionResult result = action.start(triggerContext, outputContext);
+            ActionResult result = action.start(world, memory);
             if (!runAll && result != ActionResult.PASS)
             {
                 return result;
