@@ -1,4 +1,4 @@
-package com.builtbroken.decisiontree.actions;
+package com.builtbroken.decisiontree.imp.actions;
 
 import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
@@ -6,7 +6,6 @@ import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.action.ActionResult;
-import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.action.Action;

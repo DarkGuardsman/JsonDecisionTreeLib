@@ -57,4 +57,12 @@ public interface IMemorySlot<O extends Object>
      * @return
      */
     O getValue(IMemoryContext memory);
+
+    /**
+     * Checks if we have a value stored
+     *
+     * @param memory
+     * @return
+     */
+    boolean hasValue(IMemoryContext memory);
 }
