@@ -14,7 +14,7 @@ import com.builtbroken.decisiontree.data.action.Action;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_PRINT_LINE)
-public class ActionPrintln extends Action<ActionPrintln>
+public class ActionPrintln extends Action<ActionPrintln, IWorldContext, IMemoryContext>
 {
 
     @JsonMapping(keys = "print", type = ConverterRefs.STRING)
@@ -35,6 +35,12 @@ public class ActionPrintln extends Action<ActionPrintln>
     public String getJsonType()
     {
         return DTReferences.JSON_ACTION_PRINT_LINE;
+    }
+
+    @Override
+    public boolean isCompatible(IWorldContext worldContext, IMemoryContext memoryContext)
+    {
+        return true;
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
 @JsonTemplate(type = DTReferences.JSON_MEMORY_HAS)
-public class MemoryHas extends MemoryChoice
+public class MemoryHas extends MemoryChoice<MemoryHas>
 {
     @JsonConstructor()
     public static MemoryHas build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)

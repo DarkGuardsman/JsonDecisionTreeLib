@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_SET)
-public class ActionSet extends Action<ActionSet> implements IJsonGeneratedObject
+public class ActionSet extends Action<ActionSet, IWorldContext, IMemoryContext> implements IJsonGeneratedObject
 {
 
     @JsonMapping(keys = "action", type = ConverterRefs.LIST)
@@ -40,6 +40,16 @@ public class ActionSet extends Action<ActionSet> implements IJsonGeneratedObject
     public void sort(Comparator<IAction> comparator)
     {
         actions.sort(comparator);
+    }
+
+    @Override
+    public boolean isCompatible(IWorldContext worldContext, IMemoryContext memoryContext)
+    {
+        if(runAll)
+        {
+            return actions.stream().allMatch(a -> a.isCompatible(worldContext, memoryContext));
+        }
+        return actions.stream().anyMatch(a -> a.isCompatible(worldContext, memoryContext));
     }
 
     @Override
@@ -77,6 +87,6 @@ public class ActionSet extends Action<ActionSet> implements IJsonGeneratedObject
     protected void copyInto(ActionSet action)
     {
         super.copyInto(action);
-        actions.forEach(a -> action.actions.add(a.copy()));
+        actions.forEach(a -> action.actions.add((IAction) a.copy()));
     }
 }

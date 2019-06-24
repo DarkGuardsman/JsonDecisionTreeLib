@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  * <p>
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public interface IAction
+public interface IAction<I extends IAction, W extends IWorldContext, M extends IMemoryContext> extends IActionComponent<I>
 {
 
     /**
@@ -37,7 +37,7 @@ public interface IAction
      * return complete if this is a one off action with no continue
      * return running to continue to receive ticks on the action
      */
-    ActionResult start(IWorldContext world, IMemoryContext memory);
+    ActionResult start(W world, M memory);
 
 
     /**
@@ -77,12 +77,4 @@ public interface IAction
     {
         collector.accept(this);
     }
-
-    /**
-     * Called to copy the action in the case
-     * of {@link IActionTree#copy()}
-     *
-     * @return copy of the action and all sub actions/settings
-     */
-    IAction copy();
 }

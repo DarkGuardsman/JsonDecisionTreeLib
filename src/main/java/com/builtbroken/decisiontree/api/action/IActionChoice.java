@@ -6,8 +6,7 @@ import com.builtbroken.decisiontree.api.context.IWorldContext;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
-@FunctionalInterface
-public interface IActionChoice
+public interface IActionChoice<I extends IActionChoice, W extends IWorldContext, M extends IMemoryContext> extends IActionComponent<I>
 {
-    boolean isTrue(IWorldContext world, IMemoryContext memory);
+    boolean isTrue(W world, M memory);
 }

@@ -21,10 +21,9 @@ import java.util.function.Consumer;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
 @JsonTemplate(type = DTReferences.JSON_MEMORY_VALUE)
-public class MemoryValue extends MemoryChoice
+public class MemoryValue extends MemoryChoice<MemoryValue>
 {
-
-    @JsonMapping(keys = "value", type = ConverterRefs.BOOLEAN, required = true)
+    @JsonMapping(keys = "value", type = ConverterRefs.OBJECT, required = true)
     private Object value;
 
     @JsonConstructor()
@@ -44,5 +43,12 @@ public class MemoryValue extends MemoryChoice
             return value.equals(valueStored);
         }
         return false;
+    }
+
+    @Override
+    public void copyInto(MemoryValue choice)
+    {
+        super.copyInto(choice);
+        choice.value = value;
     }
 }

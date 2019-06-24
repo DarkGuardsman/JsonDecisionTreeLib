@@ -11,7 +11,7 @@ import com.builtbroken.decisiontree.api.context.IWorldContext;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public abstract class Action<A extends Action> implements IAction, IJsonGeneratedObject
+public abstract class Action<A extends Action, W extends IWorldContext, M extends IMemoryContext> implements IAction<A,W,M>, IJsonGeneratedObject
 {
 
     @JsonMapping(keys = "priority", type = "int", required = false)
@@ -29,7 +29,7 @@ public abstract class Action<A extends Action> implements IAction, IJsonGenerate
     }
 
     @Override
-    public IAction copy()
+    public A copy()
     {
         try
         {
@@ -45,7 +45,7 @@ public abstract class Action<A extends Action> implements IAction, IJsonGenerate
     protected void copyInto(A action)
     {
         action.priority = priority;
-        action.next = next != null ? next.copy() : null;
+        action.next = next != null ? (IAction) next.copy() : null;
     }
 
     @Override

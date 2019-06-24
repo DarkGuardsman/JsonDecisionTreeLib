@@ -16,7 +16,7 @@ import com.builtbroken.decisiontree.api.context.IWorldContext;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_BRANCH)
-public class ActionBranch implements IAction, IJsonGeneratedObject
+public class ActionBranch implements IAction<ActionBranch, IWorldContext, IMemoryContext>, IJsonGeneratedObject
 {
     private String name;
 
@@ -59,6 +59,12 @@ public class ActionBranch implements IAction, IJsonGeneratedObject
     }
 
     @Override
+    public boolean isCompatible(IWorldContext worldContext, IMemoryContext memoryContext)
+    {
+        return false;
+    }
+
+    @Override
     public ActionResult start(IWorldContext world, IMemoryContext memory)
     {
         return ActionResult.COMPLETE;
@@ -75,14 +81,14 @@ public class ActionBranch implements IAction, IJsonGeneratedObject
     }
 
     @Override
-    public IAction copy()
+    public ActionBranch copy()
     {
         ActionBranch branch = new ActionBranch();
         branch.name = name;
         branch.priority = priority;
-        branch.choice = choice;
-        branch.trueAction = trueAction.copy();
-        branch.falseAction = falseAction.copy();
+        branch.choice = (IActionChoice) choice.copy();
+        branch.trueAction = (IAction) trueAction.copy();
+        branch.falseAction = (IAction) falseAction.copy();
         return branch;
     }
 }

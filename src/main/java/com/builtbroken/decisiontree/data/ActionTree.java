@@ -66,7 +66,7 @@ public class ActionTree implements IActionTree, IJsonGeneratedObject
         ActionTree tree = build(name);
         if (tree.treeStart != null)
         {
-            tree.treeStart = treeStart.copy();
+            tree.treeStart = (IAction) treeStart.copy();
         }
         return tree;
     }
