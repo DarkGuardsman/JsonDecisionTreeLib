@@ -28,7 +28,7 @@ public class Memory extends ActionContext implements IMemoryContext
     }
 
     @Override
-    public <O extends Object, M extends IMemoryValue<O>> M getValueStored(IMemorySlot<O, M> slot)
+    public <O extends Object, M extends IMemoryValue<O, M>> M getValueStored(IMemorySlot<O, M> slot)
     {
         final int index = slot.getSlotID();
         if (memoryValues != null && index >= 0 && index < memoryValues.length)

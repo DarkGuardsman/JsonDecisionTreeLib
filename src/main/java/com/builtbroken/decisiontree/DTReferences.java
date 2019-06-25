@@ -18,6 +18,7 @@ public class DTReferences
     public static final String JSON_ACTION_CHOICE = JSON_ACTION + ".choice";
 
     public static final String JSON_ACTION_PRINT_LINE = JSON_ACTION + ".print.line";
+    public static final String JSON_ACTION_WAIT = JSON_ACTION + ".wait";
 
     //Choices
     public static final String JSON_CHOICE = PREFIX + "choice";

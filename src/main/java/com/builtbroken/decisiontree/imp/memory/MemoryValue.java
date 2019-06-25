@@ -8,11 +8,11 @@ import javax.annotation.Nonnull;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public abstract class MemoryValue<O> implements IMemoryValue<O>
+public abstract class MemoryValue<O, M extends MemoryValue<O, M>> implements IMemoryValue<O, M>
 {
-    private final IMemorySlot<O, IMemoryValue<O>> slot;
+    private final IMemorySlot<O, M> slot;
 
-    public MemoryValue(IMemorySlot<O, IMemoryValue<O>> slot)
+    public MemoryValue(IMemorySlot<O, M> slot)
     {
         this.slot = slot;
     }

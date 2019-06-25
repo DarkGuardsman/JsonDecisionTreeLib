@@ -10,11 +10,12 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public class IntegerMemoryValue extends MemoryValue<Integer>
+public class IntegerMemoryValue extends MemoryValue<Integer, IntegerMemoryValue>
 {
+
     private int number;
 
-    public IntegerMemoryValue(IMemorySlot<Integer, IMemoryValue<Integer>> slot)
+    public IntegerMemoryValue(IMemorySlot<Integer, IntegerMemoryValue> slot)
     {
         super(slot);
     }
@@ -32,7 +33,7 @@ public class IntegerMemoryValue extends MemoryValue<Integer>
     }
 
     @Override
-    public IMemoryValue<Integer> setValue(@Nullable Integer value)
+    public IntegerMemoryValue setValue(@Nullable Integer value)
     {
         if (value != null)
         {
@@ -48,6 +49,26 @@ public class IntegerMemoryValue extends MemoryValue<Integer>
     public void set(int i)
     {
         this.number = i;
+    }
+
+    public void sub(int count)
+    {
+        set(get() - count);
+    }
+
+    public void add(int count)
+    {
+        set(get() + count);
+    }
+
+    public void multi(int count)
+    {
+        set(get() * count);
+    }
+
+    public void div(int count)
+    {
+        set(get() / count);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.builtbroken.decisiontree.imp.memory.value;
 
 
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
-import com.builtbroken.decisiontree.api.memory.IMemoryValue;
 import com.builtbroken.decisiontree.imp.memory.MemoryValue;
 
 import javax.annotation.Nullable;
@@ -10,12 +9,12 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public class ObjectMemoryValue extends MemoryValue<Object>
+public class ObjectMemoryValue extends MemoryValue<Object, ObjectMemoryValue>
 {
 
     private Object object;
 
-    public ObjectMemoryValue(IMemorySlot<Object, IMemoryValue<Object>> slot)
+    public ObjectMemoryValue(IMemorySlot<Object, ObjectMemoryValue> slot)
     {
         super(slot);
     }
@@ -28,7 +27,7 @@ public class ObjectMemoryValue extends MemoryValue<Object>
     }
 
     @Override
-    public IMemoryValue<Object> setValue(@Nullable Object value)
+    public ObjectMemoryValue setValue(@Nullable Object value)
     {
         this.object = value;
         return this;

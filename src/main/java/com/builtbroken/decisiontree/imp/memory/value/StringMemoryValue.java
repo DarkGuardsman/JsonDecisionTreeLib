@@ -10,11 +10,11 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public class StringMemoryValue extends MemoryValue<String>
+public class StringMemoryValue extends MemoryValue<String, StringMemoryValue>
 {
     private String string;
 
-    public StringMemoryValue(IMemorySlot<String, IMemoryValue<String>> slot)
+    public StringMemoryValue(IMemorySlot<String, StringMemoryValue> slot)
     {
         super(slot);
     }
@@ -27,7 +27,7 @@ public class StringMemoryValue extends MemoryValue<String>
     }
 
     @Override
-    public IMemoryValue<String> setValue(@Nullable String value)
+    public StringMemoryValue setValue(@Nullable String value)
     {
         string = value;
         return this;

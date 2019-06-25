@@ -8,7 +8,7 @@ import com.builtbroken.decisiontree.api.memory.IMemoryValue;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
-public abstract class MemorySlot<O extends Object> implements IMemorySlot<O, IMemoryValue<O>>
+public abstract class MemorySlot<O extends Object, M extends IMemoryValue<O, M>> implements IMemorySlot<O, M>
 {
     protected String name;
     private int id;

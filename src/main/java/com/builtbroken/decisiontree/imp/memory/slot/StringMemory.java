@@ -12,10 +12,10 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public class StringMemory extends MemorySlot<String>
+public class StringMemory extends MemorySlot<String, StringMemoryValue>
 {
     @Override
-    public IMemoryValue<String> newValue(@Nonnull IMemoryContext memory, @Nullable String oldValue)
+    public StringMemoryValue newValue(@Nonnull IMemoryContext memory, @Nullable String oldValue)
     {
         return new StringMemoryValue(this).setValue(oldValue);
     }

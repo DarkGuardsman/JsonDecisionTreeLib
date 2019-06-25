@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public interface IMemorySlot<O extends Object, M extends IMemoryValue<O>>
+public interface IMemorySlot<O extends Object, M extends IMemoryValue<O, M>>
 {
 
     /**

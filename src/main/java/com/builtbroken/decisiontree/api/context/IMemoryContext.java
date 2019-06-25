@@ -33,7 +33,7 @@ public interface IMemoryContext extends IActionContext
      * @return value object
      */
     @Nullable
-    <O extends Object, M extends IMemoryValue<O>> M getValueStored(IMemorySlot<O, M> slot);
+    <O extends Object, M extends IMemoryValue<O, M>> M getValueStored(IMemorySlot<O, M> slot);
 
     /**
      * Called to map memory names to slot ids.
