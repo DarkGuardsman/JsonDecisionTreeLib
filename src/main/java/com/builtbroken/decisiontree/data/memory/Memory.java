@@ -1,11 +1,12 @@
 package com.builtbroken.decisiontree.data.memory;
 
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
+import com.builtbroken.decisiontree.api.memory.IMemoryModel;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.api.memory.IMemoryValue;
 import com.builtbroken.decisiontree.data.context.ActionContext;
 
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
@@ -13,22 +14,20 @@ import java.util.Map;
 public class Memory extends ActionContext implements IMemoryContext
 {
 
-    private Map<String, IMemorySlot> nameToSlot;
     private IMemoryValue[] memoryValues;
-    private IMemorySlot[] slots;
+    private IMemoryModel memoryModel;
 
     @Override
     public Object getValueStored(int index)
     {
-        if (slots != null && index >= 0 && index < slots.length)
-        {
-            return getValueStored(slots[index]);
-        }
-        return null;
+        return getValueStored(memoryModel.getSlot(index));
     }
 
     @Override
-    public <O extends Object, M extends IMemoryValue<O, M>> M getValueStored(IMemorySlot<O, M> slot)
+    public <S extends IMemorySlot<S, O, M>,
+            O extends Object,
+            M extends IMemoryValue<O, M>>
+    M getValueStored(IMemorySlot<S, O, M> slot)
     {
         final int index = slot.getSlotID();
         if (memoryValues != null && index >= 0 && index < memoryValues.length)
@@ -50,9 +49,9 @@ public class Memory extends ActionContext implements IMemoryContext
     }
 
     @Override
-    public void mapSlots(Iterable<IMemoryValue> slots)
+    public void mapModel(@Nonnull IMemoryModel model)
     {
-
+        this.memoryModel = model;
     }
 
     @Override

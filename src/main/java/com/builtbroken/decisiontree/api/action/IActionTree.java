@@ -1,5 +1,7 @@
 package com.builtbroken.decisiontree.api.action;
 
+import com.builtbroken.decisiontree.api.memory.IMemoryModel;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -34,7 +36,7 @@ public interface IActionTree
      * Called to bake all settings and elements of the tree.
      * This is done to prep the tree for runtime usage.
      * <p>
-     * Generates {@link #getMemorySlots()} return
+     * Generates {@link #getMemoryModel()}
      */
     void bakeTree();
 
@@ -44,7 +46,7 @@ public interface IActionTree
      *
      * @return memory slots
      */
-    Map<String, Integer> getMemorySlots();
+    IMemoryModel getMemoryModel();
 
     /**
      * Called to collect all actions for use in other process.

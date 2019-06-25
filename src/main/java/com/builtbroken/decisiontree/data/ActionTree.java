@@ -9,15 +9,10 @@ import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.action.IActionTree;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
+import com.builtbroken.decisiontree.api.memory.IMemoryModel;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
-import com.google.common.collect.ImmutableMap;
-
-import java.util.HashMap;
+import com.builtbroken.decisiontree.data.memory.MemoryModel;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -32,7 +27,7 @@ public class ActionTree implements IActionTree, IJsonGeneratedObject
     @JsonObjectWiring(jsonFields = "starts", objectType = DTReferences.JSON_ACTION_SET)
     private IAction treeStart;
 
-    private ImmutableMap<String, Integer> memorySlots;
+    private MemoryModel memoryModel;
 
     @JsonConstructor
     public static ActionTree build(@JsonMapping(keys = "name", type = "string") String name)
@@ -81,35 +76,18 @@ public class ActionTree implements IActionTree, IJsonGeneratedObject
         {
             if (action instanceof IMemoryAction)
             {
-                ((IMemoryAction) action).collectMemory(mem ->
-                {
-                    memoryList.add(mem);
-                });
+                ((IMemoryAction) action).collectMemory(mem -> memoryList.add(mem));
             }
         });
 
-        //Map IDs
-        final HashMap<String, Integer> memorySlots = new HashMap();
-        int index = 0;
-        for (IMemorySlot slot : memoryList)
-        {
-            final String name = slot.getUniqueName();
-            if (!memorySlots.containsKey(name))
-            {
-                slot.setSlotID(index);
-                memorySlots.put(name, index);
-            }
-        }
-
         //Cache
-        ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
-        builder.putAll(memorySlots);
-        this.memorySlots = builder.build();
+        memoryModel = new MemoryModel();
+        memoryModel.build(memoryList);
     }
 
     @Override
-    public Map<String, Integer> getMemorySlots()
+    public IMemoryModel getMemoryModel()
     {
-        return memorySlots;
+        return memoryModel;
     }
 }

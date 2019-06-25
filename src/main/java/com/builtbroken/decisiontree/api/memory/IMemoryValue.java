@@ -18,7 +18,7 @@ public interface IMemoryValue<O, M extends IMemoryValue<O, M>>
      * @return
      */
     @Nonnull
-    IMemorySlot<O, M> getSlot();
+    IMemorySlot getSlot();
 
     /**
      * Gets the stored value

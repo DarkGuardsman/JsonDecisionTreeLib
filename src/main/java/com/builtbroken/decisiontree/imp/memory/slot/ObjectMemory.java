@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
 @JsonTemplate(type = DTReferences.JSON_MEMORY)
-public class ObjectMemory extends MemorySlot<Object, ObjectMemoryValue>
+public class ObjectMemory extends MemorySlot<ObjectMemory, Object, ObjectMemoryValue>
 {
 
     @JsonConstructor()
@@ -30,6 +30,6 @@ public class ObjectMemory extends MemorySlot<Object, ObjectMemoryValue>
     @Override
     public ObjectMemoryValue newValue(@Nonnull IMemoryContext memory, @Nullable Object oldValue)
     {
-        return new ObjectMemoryValue(this).setValue(oldValue);
+        return new ObjectMemoryValue().setSlot(this).setValue(oldValue);
     }
 }

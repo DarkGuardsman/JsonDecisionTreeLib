@@ -14,11 +14,6 @@ public class StringMemoryValue extends MemoryValue<String, StringMemoryValue>
 {
     private String string;
 
-    public StringMemoryValue(IMemorySlot<String, StringMemoryValue> slot)
-    {
-        super(slot);
-    }
-
     @Nullable
     @Override
     public String getValue()

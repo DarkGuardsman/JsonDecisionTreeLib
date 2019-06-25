@@ -1,5 +1,6 @@
 package com.builtbroken.decisiontree.api.context;
 
+import com.builtbroken.decisiontree.api.memory.IMemoryModel;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.api.memory.IMemoryValue;
 
@@ -33,18 +34,15 @@ public interface IMemoryContext extends IActionContext
      * @return value object
      */
     @Nullable
-    <O extends Object, M extends IMemoryValue<O, M>> M getValueStored(IMemorySlot<O, M> slot);
+    public <S extends IMemorySlot<S, O, M>, //Ya.... :/
+            O extends Object,
+            M extends IMemoryValue<O, M>>
+    M getValueStored(IMemorySlot<S, O, M> slot);
 
     /**
-     * Called to map memory names to slot ids.
-     * <p>
-     * If the context had previous memory it will
-     * attempt to map the old indexes to the new
-     * indexes.
-     *
-     * @param slots
+     * Called to map memory model to the memory instance
      */
-    void mapSlots(@Nonnull Iterable<IMemoryValue> slots);
+    void mapModel(@Nonnull IMemoryModel model);
 
     /**
      * Clears all stored memory

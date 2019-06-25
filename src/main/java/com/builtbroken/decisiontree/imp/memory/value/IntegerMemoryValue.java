@@ -1,8 +1,5 @@
 package com.builtbroken.decisiontree.imp.memory.value;
 
-
-import com.builtbroken.decisiontree.api.memory.IMemorySlot;
-import com.builtbroken.decisiontree.api.memory.IMemoryValue;
 import com.builtbroken.decisiontree.imp.memory.MemoryValue;
 
 import javax.annotation.Nullable;
@@ -12,13 +9,7 @@ import javax.annotation.Nullable;
  */
 public class IntegerMemoryValue extends MemoryValue<Integer, IntegerMemoryValue>
 {
-
     private int number;
-
-    public IntegerMemoryValue(IMemorySlot<Integer, IntegerMemoryValue> slot)
-    {
-        super(slot);
-    }
 
     @Nullable
     @Override

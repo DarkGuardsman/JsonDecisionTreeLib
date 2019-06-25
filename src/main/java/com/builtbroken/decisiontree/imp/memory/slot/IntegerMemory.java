@@ -10,13 +10,20 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public class IntegerMemory extends MemorySlot<Integer, IntegerMemoryValue>
+public class IntegerMemory extends MemorySlot<IntegerMemory, Integer, IntegerMemoryValue>
 {
+
+    public static IntegerMemory build(String name)
+    {
+        IntegerMemory memory = new IntegerMemory();
+        memory.name = name;
+        return memory;
+    }
 
     @Override
     public IntegerMemoryValue newValue(@Nonnull IMemoryContext memory, @Nullable Integer oldValue)
     {
-        return new IntegerMemoryValue(this).setValue(oldValue);
+        return new IntegerMemoryValue().setSlot(this).setValue(oldValue);
     }
 
     public int get(IMemoryContext memory)

@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public interface IMemorySlot<O extends Object, M extends IMemoryValue<O, M>>
+public interface IMemorySlot<S extends IMemorySlot<S, O, M>, O extends Object, M extends IMemoryValue<O, M>>
 {
 
     /**
@@ -119,4 +119,16 @@ public interface IMemorySlot<O extends Object, M extends IMemoryValue<O, M>>
         }
         return false;
     }
+
+    /**
+     * Called to create a copy of the component.
+     * <p>
+     * Used when it duplicating logic trees for usage
+     * in other places without worrying about
+     * referenced being changed between trees by mistake.
+     *
+     * @return copy
+     */
+    @Nonnull
+    S copy();
 }

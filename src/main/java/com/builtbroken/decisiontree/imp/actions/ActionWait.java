@@ -16,17 +16,32 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-/**
+/** Simple AI action to wait
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
 @JsonTemplate(type = DTReferences.JSON_ACTION_WAIT)
 public class ActionWait extends Action<ActionWait, IWorldContext, IMemoryContext> implements IMemoryAction
 {
 
-    private final IntegerMemory waitTime = new IntegerMemory();
+    //Memory slot that tracks the wait decrement in the AI's memory
+    private IntegerMemory waitTime;
 
+    //Amount of time to wait, set at start and decreased in update loop
     @JsonMapping(keys = "ticks", type = ConverterRefs.INT, required = true)
     private int waitInit = 1;
+
+    private ActionWait()
+    {
+        //Empty to allow reflection building and private to prevent mistake use
+    }
+
+    public ActionWait build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    {
+        ActionWait wait = new ActionWait();
+        wait.name = name;
+        wait.waitTime = IntegerMemory.build(name + "_wait");
+        return wait;
+    }
 
     @Override
     public String getJsonType()
@@ -52,12 +67,17 @@ public class ActionWait extends Action<ActionWait, IWorldContext, IMemoryContext
     {
         if (memory != null && waitTime.hasValue(memory))
         {
-            if (waitTime.get(memory) == 0)
+            //If at end then complete
+            if (waitTime.get(memory) <= 0)
             {
                 return ActionResult.COMPLETE;
             }
+
+            //Decrement counter
             waitTime.getMemory(memory).sub(1);
-            return ActionResult.RUNNING;
+
+            //Step to next tick, ends AI loop
+            return ActionResult.STEP;
         }
         return ActionResult.ERROR;
     }
