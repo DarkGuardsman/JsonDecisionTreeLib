@@ -2,10 +2,13 @@ package com.builtbroken.decisiontree.api.memory;
 
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public interface IMemorySlot<O extends Object>
+public interface IMemorySlot<O extends Object, M extends IMemoryValue<O>>
 {
 
     /**
@@ -19,6 +22,7 @@ public interface IMemorySlot<O extends Object>
      *
      * @return unique string value
      */
+    @Nonnull
     String getUniqueName();
 
     /**
@@ -27,7 +31,16 @@ public interface IMemorySlot<O extends Object>
      * @param memory
      * @return
      */
-    String getDisplayValue(IMemoryContext memory);
+    @Nonnull
+    default String getDisplayValue(@Nonnull IMemoryContext memory)
+    {
+        final M value = memory.getValueStored(this);
+        if (value != null)
+        {
+            return getUniqueName() + "='" + value.getValue() + "'";
+        }
+        return getUniqueName() + "=null";
+    }
 
     /**
      * Gets the index of the memory in the {@link IMemoryContext}
@@ -51,18 +64,59 @@ public interface IMemorySlot<O extends Object>
     void setSlotID(int index);
 
     /**
-     * Gets the value of the memory
+     * called to generate a new memory value object
+     * for storing values.
      *
-     * @param memory
+     * @param memory   - memory that will store this value
+     * @param oldValue - old value if it existed
      * @return
      */
-    O getValue(IMemoryContext memory);
+    M newValue(@Nonnull IMemoryContext memory, @Nullable O oldValue);
+
+    /**
+     * Gets the value of the memory
+     *
+     * @param memory - memory to use
+     * @return
+     */
+    default O getValue(@Nonnull IMemoryContext memory)
+    {
+        final M value = memory.getValueStored(this);
+        if (value != null)
+        {
+            return value.getValue();
+        }
+        return null;
+    }
+
+    /**
+     * Gets the value wrapper stored in memory.
+     * <p>
+     * This can be a more effective way to access some
+     * types of memory such as integers, and bytes that
+     * may be inefficient to access as an object.
+     *
+     * @param memory - memory to use
+     * @return value stored, or null if nothing is stored
+     */
+    default M getMemory(@Nonnull IMemoryContext memory)
+    {
+        return memory.getValueStored(this);
+    }
 
     /**
      * Checks if we have a value stored
      *
-     * @param memory
+     * @param memory - memory to use
      * @return
      */
-    boolean hasValue(IMemoryContext memory);
+    default boolean hasValue(IMemoryContext memory)
+    {
+        final M value = memory.getValueStored(this);
+        if (value != null)
+        {
+            return value.hasValue();
+        }
+        return false;
+    }
 }

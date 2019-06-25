@@ -4,6 +4,8 @@ import com.builtbroken.decisiontree.api.context.IActionContext;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
@@ -37,7 +39,8 @@ public interface IAction<I extends IAction, W extends IWorldContext, M extends I
      * return complete if this is a one off action with no continue
      * return running to continue to receive ticks on the action
      */
-    ActionResult start(W world, M memory);
+    @Nonnull
+    ActionResult start(@Nonnull W world, @Nullable M memory);  //TODO add error feedback using a supplier or something
 
 
     /**
@@ -49,10 +52,12 @@ public interface IAction<I extends IAction, W extends IWorldContext, M extends I
      * @param delta  - time since last tick
      * @return state of the action
      */
-    default ActionResult update(IWorldContext world, IMemoryContext memory, int tick, float delta)
+    @Nonnull
+    default ActionResult update(@Nonnull W world, @Nullable M memory, int tick, float delta)
     {
         return ActionResult.COMPLETE;
     }
+    //TODO add error feedback
 
     /**
      * Called at the end of the action
@@ -61,7 +66,8 @@ public interface IAction<I extends IAction, W extends IWorldContext, M extends I
      * @param memory - memory stored of previous actions
      * @return next action to run
      */
-    default IAction end(IWorldContext world, IMemoryContext memory)
+    @Nullable
+    default IAction end(@Nonnull W world, @Nullable M memory)
     {
         return null;
     }
@@ -73,7 +79,7 @@ public interface IAction<I extends IAction, W extends IWorldContext, M extends I
      *
      * @param collector - thing that wants to collect
      */
-    default void collectActions(Consumer<IAction> collector)
+    default void collectActions(@Nonnull Consumer<IAction> collector)
     {
         collector.accept(this);
     }

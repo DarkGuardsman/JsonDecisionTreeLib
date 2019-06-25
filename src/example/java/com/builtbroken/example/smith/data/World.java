@@ -1,6 +1,5 @@
 package com.builtbroken.example.smith.data;
 
-import com.builtbroken.decisiontree.api.context.IActorContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.context.ActionContext;
 
@@ -12,8 +11,17 @@ public class World extends ActionContext implements IWorldContext
     public Furnace furnace;
     public Chest chest;
 
-    public World(IActorContext actorContext)
+    public void tick(int tick)
     {
-        super(actorContext);
+        if(furnace != null)
+        {
+            furnace.tick();
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return "World[" + getContextOwner() + "]";
     }
 }

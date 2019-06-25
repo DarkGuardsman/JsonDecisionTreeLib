@@ -1,5 +1,7 @@
 package com.builtbroken.decisiontree.api.context;
 
+import javax.annotation.Nonnull;
+
 /**
  * Context information about the Ai running actions
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
@@ -14,6 +16,7 @@ public interface IActorContext
      *
      * @return
      */
+    @Nonnull
     String getUniqueName();
 
     /**
@@ -21,6 +24,7 @@ public interface IActorContext
      *
      * @return
      */
+    @Nonnull
     String getDisplayName();
 
     /**

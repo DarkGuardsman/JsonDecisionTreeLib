@@ -14,7 +14,7 @@ import com.builtbroken.decisiontree.api.context.IWorldContext;
 public abstract class Action<A extends Action, W extends IWorldContext, M extends IMemoryContext> implements IAction<A,W,M>, IJsonGeneratedObject
 {
 
-    @JsonMapping(keys = "priority", type = "int", required = false)
+    @JsonMapping(keys = "priority", type = "int")
     public int priority = 0;
 
     protected String name;

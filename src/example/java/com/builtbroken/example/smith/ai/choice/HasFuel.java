@@ -15,6 +15,13 @@ public class HasFuel extends WorldChoice<HasFuel>
     @JsonMapping(keys = "fuel_level", type = ConverterRefs.INT, required = true)
     private int fuelLevel;
 
+    public static HasFuel build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    {
+        HasFuel object = new HasFuel();
+        object.name = name;
+        return object;
+    }
+
     @Override
     public void copyInto(HasFuel choice)
     {

@@ -1,6 +1,10 @@
 package com.builtbroken.decisiontree.api.context;
 
-import java.util.Map;
+import com.builtbroken.decisiontree.api.memory.IMemorySlot;
+import com.builtbroken.decisiontree.api.memory.IMemoryValue;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Context about an {@link com.builtbroken.decisiontree.logic.ActorLogic} memory
@@ -9,16 +13,27 @@ import java.util.Map;
  * <p>
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-public interface IMemoryContext extends IActorContext
+public interface IMemoryContext extends IActionContext
 {
 
     /**
      * Get value stored in the memory slot
      *
-     * @param index
+     * @param index - index
      * @return
      */
+    @Nullable
     Object getValueStored(int index);
+
+
+    /**
+     * Get value stored in the memory slot
+     *
+     * @param slot - memory slot
+     * @return value object
+     */
+    @Nullable
+    <O extends Object, M extends IMemoryValue<O>> M getValueStored(IMemorySlot<O, M> slot);
 
     /**
      * Called to map memory names to slot ids.
@@ -29,7 +44,7 @@ public interface IMemoryContext extends IActorContext
      *
      * @param slots
      */
-    void mapSlots(Map<String, Integer> slots);
+    void mapSlots(@Nonnull Iterable<IMemoryValue> slots);
 
     /**
      * Clears all stored memory

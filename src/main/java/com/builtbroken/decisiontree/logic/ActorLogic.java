@@ -7,6 +7,8 @@ import com.builtbroken.decisiontree.api.context.IActorContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 import com.builtbroken.decisiontree.data.ActionTree;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 /**
@@ -33,10 +35,19 @@ public class ActorLogic
         this.actorContext = actorContext;
     }
 
-    public void setStage(IWorldContext worldContext, IMemoryContext memory, boolean reset)
+    public void setStage(@Nonnull IWorldContext worldContext, @Nullable IMemoryContext memory, boolean reset)
     {
         this.world = worldContext;
         this.memory = memory;
+
+        //init
+        worldContext.init(actorContext);
+        if(memory != null)
+        {
+            memory.init(actorContext);
+        }
+
+        //Reset
         if (reset)
         {
             reset();

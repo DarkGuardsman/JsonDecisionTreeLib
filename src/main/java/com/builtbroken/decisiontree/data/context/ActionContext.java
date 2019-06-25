@@ -11,16 +11,31 @@ import com.builtbroken.decisiontree.api.context.IActorContext;
  */
 public class ActionContext implements IActionContext
 {
-    public final IActorContext actorContext;
 
-    public ActionContext(IActorContext actorContext)
-    {
-        this.actorContext = actorContext;
-    }
+    private IActorContext actorContext;
 
     @Override
     public IActorContext getContextOwner()
     {
         return actorContext;
+    }
+
+    @Override
+    public void init(IActorContext context)
+    {
+        if (actorContext != null)
+        {
+            this.actorContext = context;
+        }
+        else
+        {
+            throw new UnsupportedOperationException("Actor context can only be set once, " + this);
+        }
+    }
+
+    @Override
+    public String toString()
+    {
+        return getClass() + "[" + actorContext + "]@" + hashCode();
     }
 }

@@ -12,8 +12,15 @@ import com.builtbroken.example.smith.data.World;
 @JsonTemplate(type = "smith:has_input")
 public class HasInput extends WorldChoice<HasInput>
 {
-    @JsonMapping(keys = "input_count", type = ConverterRefs.INT, required = true)
+    @JsonMapping(keys = "count", type = ConverterRefs.INT, required = true)
     private int inputCount;
+
+    public static HasInput build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    {
+        HasInput object = new HasInput();
+        object.name = name;
+        return object;
+    }
 
     //TODO find way to make this generic using some type of data accessor or adapter
     //      This way we only have 1 choice class for a range of usage

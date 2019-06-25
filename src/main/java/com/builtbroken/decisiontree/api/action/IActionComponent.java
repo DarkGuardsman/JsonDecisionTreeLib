@@ -3,6 +3,9 @@ package com.builtbroken.decisiontree.api.action;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IWorldContext;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-24.
  */
@@ -20,7 +23,7 @@ public interface IActionComponent<I extends IActionComponent>
      * @param memoryContext
      * @return
      */
-    boolean isCompatible(IWorldContext worldContext, IMemoryContext memoryContext);
+    boolean isCompatible(@Nonnull IWorldContext worldContext, @Nullable IMemoryContext memoryContext);
 
     /**
      * Called to create a copy of the component.
@@ -31,5 +34,6 @@ public interface IActionComponent<I extends IActionComponent>
      *
      * @return copy
      */
+    @Nonnull
     I copy();
 }
