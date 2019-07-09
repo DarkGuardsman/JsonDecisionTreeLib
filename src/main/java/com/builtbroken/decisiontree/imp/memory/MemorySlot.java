@@ -4,7 +4,6 @@ import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.api.memory.IMemoryValue;
-import com.builtbroken.decisiontree.imp.memory.slot.IntegerMemory;
 
 import javax.annotation.Nonnull;
 

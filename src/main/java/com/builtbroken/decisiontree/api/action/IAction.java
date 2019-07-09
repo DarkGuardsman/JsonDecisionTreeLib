@@ -2,7 +2,7 @@ package com.builtbroken.decisiontree.api.action;
 
 import com.builtbroken.decisiontree.api.context.IActionContext;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
-import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

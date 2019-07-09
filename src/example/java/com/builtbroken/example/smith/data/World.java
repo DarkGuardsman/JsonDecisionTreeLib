@@ -1,6 +1,6 @@
 package com.builtbroken.example.smith.data;
 
-import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 import com.builtbroken.decisiontree.data.context.ActionContext;
 
 /**

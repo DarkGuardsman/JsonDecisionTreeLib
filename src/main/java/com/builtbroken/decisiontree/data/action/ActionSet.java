@@ -9,7 +9,7 @@ import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
-import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 
 import java.util.ArrayList;
 import java.util.Comparator;

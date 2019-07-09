@@ -7,7 +7,7 @@ import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.DTReferences;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
-import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 import com.builtbroken.decisiontree.data.action.Action;
 
 /**

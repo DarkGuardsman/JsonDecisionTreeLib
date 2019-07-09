@@ -4,7 +4,7 @@ import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.IActorContext;
-import com.builtbroken.decisiontree.api.context.IWorldContext;
+import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 import com.builtbroken.decisiontree.data.ActionTree;
 
 import javax.annotation.Nonnull;
