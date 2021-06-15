@@ -8,7 +8,7 @@ import com.builtbroken.example.smith.data.World;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-public abstract class WorldAction<A extends WorldAction> extends Action<WorldAction, World, IMemoryContext>
+public abstract class WorldAction<A extends WorldAction> extends Action<A, World, IMemoryContext>
 {
     @Override
     public boolean isCompatible(IWorldContext worldContext, IMemoryContext memoryContext)
