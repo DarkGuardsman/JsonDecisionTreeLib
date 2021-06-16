@@ -1,16 +1,24 @@
 package com.builtbroken.example.smith.data;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
+
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-24.
  */
+@Data
 public class Furnace
 {
+    @Setter(value = AccessLevel.NONE)
+    private int cookTime = 0;
+    @Setter(value = AccessLevel.NONE)
+    private int fuelTime = 0;
 
-    public int cookTime = 0;
-    public int fuelTime = 0;
-
-    public int inputCount = 0;
-    public int outputCount = 0;
+    @Setter(value = AccessLevel.NONE)
+    private int inputCount = 0;
+    @Setter(value = AccessLevel.NONE)
+    private int outputCount = 0;
 
     public void tick()
     {

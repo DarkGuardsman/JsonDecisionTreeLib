@@ -16,7 +16,7 @@ public enum ActionResult
     /**
      * Action has completed fully, pause AI loop until next game tick
      */
-    STEP,
+    STEP, //TODO rename
     /**
      * Action still has more to do
      */

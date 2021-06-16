@@ -2,6 +2,7 @@ package com.builtbroken.decisiontree.data.context;
 
 import com.builtbroken.decisiontree.api.context.IActionContext;
 import com.builtbroken.decisiontree.api.context.IActorContext;
+import lombok.Data;
 
 /**
  * Used to give an action information about the context by which the action was triggered in
@@ -9,9 +10,9 @@ import com.builtbroken.decisiontree.api.context.IActorContext;
  * <p>
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
+@Data
 public class ActionContext implements IActionContext
 {
-
     private IActorContext actorContext;
 
     @Override
@@ -23,7 +24,7 @@ public class ActionContext implements IActionContext
     @Override
     public void init(IActorContext context)
     {
-        if (actorContext != null)
+        if (actorContext == null)
         {
             this.actorContext = context;
         }

@@ -22,12 +22,6 @@ public class HasInput extends WorldChoice<HasInput>
         return object;
     }
 
-    //TODO find way to make this generic using some type of data accessor or adapter
-    //      This way we only have 1 choice class for a range of usage
-    //      Idea would be to place some data structure into the world context that we
-    //      can queue for information about the focus of the AI's attention. Then
-    //      we can just do if(accessor.getValue(key) >= expectedValue)
-
     @Override
     public void copyInto(HasInput choice)
     {
@@ -37,6 +31,6 @@ public class HasInput extends WorldChoice<HasInput>
     @Override
     public boolean isTrue(World world, IMemoryContext memory)
     {
-        return world.furnace.inputCount >= inputCount;
+        return world.getFurnace().getInputCount() >= inputCount;
     }
 }

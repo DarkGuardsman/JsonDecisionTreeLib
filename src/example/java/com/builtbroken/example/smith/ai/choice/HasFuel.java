@@ -13,7 +13,7 @@ import com.builtbroken.example.smith.data.World;
 public class HasFuel extends WorldChoice<HasFuel>
 {
     @JsonMapping(keys = "fuel_level", type = ConverterRefs.INT, required = true)
-    private int fuelLevel;
+    private int fuelLevel = 1;
 
     public static HasFuel build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
     {
@@ -31,6 +31,6 @@ public class HasFuel extends WorldChoice<HasFuel>
     @Override
     public boolean isTrue(World world, IMemoryContext memory)
     {
-        return world.furnace.fuelTime >= fuelLevel;
+        return world.getFurnace().getFuelTime() >= fuelLevel;
     }
 }

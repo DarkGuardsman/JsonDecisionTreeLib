@@ -31,6 +31,6 @@ public class HasOutput extends WorldChoice<HasOutput>
     @Override
     public boolean isTrue(World world, IMemoryContext memory)
     {
-        return world.furnace.outputCount >= count;
+        return world.getFurnace().getOutputCount() >= count;
     }
 }

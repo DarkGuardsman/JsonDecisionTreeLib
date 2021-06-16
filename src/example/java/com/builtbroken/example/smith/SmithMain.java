@@ -28,8 +28,20 @@ public class SmithMain
             long lastLoopTime = System.currentTimeMillis();
             while (running)
             {
-                loop(world, tick);
-                lastLoopTime = sleep(lastLoopTime);
+                //Increase tick
+                tick++;
+
+                //Logging
+                System.out.println("Tick: " + tick);
+
+                //Tick world
+                world.tick(tick);
+
+                //Tick AI
+                actorLogic.update(tick, 0);
+                running = tick <= 100000; //TODO tie to AI state
+
+                lastLoopTime = sleep(lastLoopTime); //TODO track delta and pass into loop
             }
         } catch (Exception e)
         {
@@ -46,10 +58,5 @@ public class SmithMain
             Thread.sleep(lastLoopTime);
         }
         return current;
-    }
-
-    public static void loop(World world, int tick)
-    {
-
     }
 }

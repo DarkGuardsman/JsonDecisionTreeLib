@@ -5,6 +5,8 @@ import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
+import com.builtbroken.example.smith.data.Chest;
+import com.builtbroken.example.smith.data.Furnace;
 import com.builtbroken.example.smith.data.World;
 
 /**
@@ -13,7 +15,6 @@ import com.builtbroken.example.smith.data.World;
 @JsonTemplate(type = "smith:add_fuel")
 public class AddFuel extends WorldAction<AddFuel>
 {
-
     @JsonMapping(keys = "count", type = ConverterRefs.INT)
     private int count = 1;
 
@@ -33,16 +34,21 @@ public class AddFuel extends WorldAction<AddFuel>
     @Override
     public ActionResult start(World world, IMemoryContext memory)
     {
-        if (world.chest != null && world.furnace != null)
+        final Chest chest = world.getChest();
+        final Furnace furnace = world.getFurnace();
+        if (chest.getFuelItems() > 0)
         {
-            if (world.chest.fuelItems > 0)
-            {
-                int remove = Math.min(count, world.chest.fuelItems);
-                world.chest.fuelItems -= remove;
-                world.furnace.addFuelItem(remove);
-                return ActionResult.COMPLETE;
-            }
+            //Pull item from storage
+            final int amountStored = chest.getFuelItems();
+            final int remove = Math.min(count, amountStored);
+            chest.setFuelItems(amountStored - remove);
+
+            //Place item into furnace
+            furnace.addFuelItem(remove);
+
+            //End
+            return ActionResult.STEP;
         }
-        return ActionResult.ERROR;
+        return ActionResult.PASS;
     }
 }
