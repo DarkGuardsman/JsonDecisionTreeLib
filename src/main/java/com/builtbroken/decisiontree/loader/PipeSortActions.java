@@ -5,6 +5,7 @@ import com.builtbroken.builder.pipe.nodes.NodeActionResult;
 import com.builtbroken.builder.pipe.nodes.NodeType;
 import com.builtbroken.builder.pipe.nodes.prefab.PipeNode;
 import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.data.action.ActionSet;
 import com.google.gson.JsonElement;
 
@@ -24,7 +25,7 @@ public class PipeSortActions extends PipeNode<ActionSet>
     @Override
     public void receive(JsonElement data, ActionSet currentObject, Queue<Object> objectsOut)
     {
-        currentObject.sort(Comparator.comparingInt(a -> a.getPriority()));
+        currentObject.sort(Comparator.comparingInt(IAction::getPriority));
     }
 
     @Override

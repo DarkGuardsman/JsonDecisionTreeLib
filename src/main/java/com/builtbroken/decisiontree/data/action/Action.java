@@ -13,7 +13,6 @@ import com.builtbroken.decisiontree.api.context.world.IWorldContext;
  */
 public abstract class Action<A extends Action, W extends IWorldContext, M extends IMemoryContext> implements IAction<A,W,M>, IJsonGeneratedObject
 {
-
     @JsonMapping(keys = "priority", type = "int")
     public int priority = 0;
 
@@ -57,5 +56,11 @@ public abstract class Action<A extends Action, W extends IWorldContext, M extend
     public String getJsonUniqueID()
     {
         return name;
+    }
+
+    @Override
+    public String getJsonType()
+    {
+        return DTReferences.JSON_ACTION;
     }
 }

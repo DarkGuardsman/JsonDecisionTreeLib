@@ -13,16 +13,14 @@ class HasFuelTest
     void testHasFuel_true() {
         //Setup test world
         final World world = new World();
-        world.getFurnace().addFuelItem(1);
-
-        //Test expectations of starting conditions
-        Assertions.assertEquals(10, world.getFurnace().getFuelTime());
+        world.getFurnace().setFuelTime(10);
 
         //Invoke task
         final HasFuel hasFuel = HasFuel.build("has_fuel");
+        final boolean result = hasFuel.isTrue(world, null);
 
         //Test expectations
-        Assertions.assertTrue(hasFuel.isTrue(world, null));
+        Assertions.assertTrue(result);
     }
 
     @Test
@@ -30,13 +28,11 @@ class HasFuelTest
         //Setup test world
         final World world = new World();
 
-        //Test expectations of starting conditions
-        Assertions.assertEquals(0, world.getFurnace().getFuelTime());
-
         //Invoke task
         final HasFuel hasFuel = HasFuel.build("has_fuel");
+        final boolean result = hasFuel.isTrue(world, null);
 
         //Test expectations
-        Assertions.assertFalse(hasFuel.isTrue(world, null));
+        Assertions.assertFalse(result);
     }
 }

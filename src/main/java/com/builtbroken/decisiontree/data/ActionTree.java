@@ -76,9 +76,11 @@ public class ActionTree implements IActionTree, IJsonGeneratedObject
         {
             if (action instanceof IMemoryAction)
             {
-                ((IMemoryAction) action).collectMemory(mem -> memoryList.add(mem));
+                ((IMemoryAction) action).collectMemory(memoryList::add);
             }
         });
+
+        //TODO validate two memory objects don't share the same name
 
         //Cache
         memoryModel = new MemoryModel();
