@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Created by Robin Seifert on 6/17/2021.
  */
-public class InventoryContainsTest
+class InventoryContainsTest
 {
     private World world;
     private IMemoryContext memory;

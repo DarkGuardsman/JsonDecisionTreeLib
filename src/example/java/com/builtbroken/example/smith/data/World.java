@@ -18,6 +18,7 @@ public class World extends ActionContext implements IWorldContext
 {
     private final Furnace furnace = new Furnace();
     private final Chest chest = new Chest();
+    private final Inventory aiInventory = new Inventory(5, 10);
 
     public void tick(int tick)
     {

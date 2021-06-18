@@ -11,7 +11,14 @@ import lombok.Data;
 public class Item
 {
     /** Unique ID of the item */
-    private int itemID;
+    private final int itemID;
     /** Max inventory stack of the item */
-    private int maxStack;
+    private final int maxStack;
+    /** User readable name */
+    private final String displayName;
+
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }

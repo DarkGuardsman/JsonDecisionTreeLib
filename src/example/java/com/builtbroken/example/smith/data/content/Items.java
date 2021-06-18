@@ -5,7 +5,7 @@ package com.builtbroken.example.smith.data.content;
  */
 public class Items
 {
-    public static final Item fuel = new Item(0, 10);
-    public static final Item ore = new Item(1, 3);
-    public static final Item ingots = new Item(1, 5);
+    public static final Item fuel = new Item(0, 10, "Fuel");
+    public static final Item ore = new Item(1, 3, "Ore");
+    public static final Item ingots = new Item(1, 5, "Ingots");
 }

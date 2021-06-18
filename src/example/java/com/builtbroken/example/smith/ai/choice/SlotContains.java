@@ -7,10 +7,10 @@ import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
+import com.builtbroken.example.smith.ai.AiHelper;
 import com.builtbroken.example.smith.ai.MemorySlots;
 import com.builtbroken.example.smith.data.World;
 import com.builtbroken.example.smith.data.content.Item;
-import com.builtbroken.example.smith.data.inventory.Inventory;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -55,13 +55,8 @@ public final class SlotContains extends WorldChoice<SlotContains> implements IMe
     @Override
     public boolean isTrue(World world, IMemoryContext memory)
     {
-        final String tile = MemorySlots.MEMORY_FOCUSED_TILE.getValue(memory);
-        final Inventory inventory = world.getInventory(tile);
-        if (inventory != null)
-        {
-            return inventory.hasItemInSlot(slot, item, count, exact);
-        }
-        return false;
+        return AiHelper.actOnInventory(world, memory,
+                (inventory) -> inventory.hasItemInSlot(slot, item, count, exact));
     }
 
     /**
