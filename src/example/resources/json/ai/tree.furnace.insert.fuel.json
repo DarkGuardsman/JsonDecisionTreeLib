@@ -1,0 +1,5 @@
+{
+  "type": "builtbroken:ai.logic.tree",
+  "name" : "smith:furnace.insert.fuel",
+  "start": "smith:focus.chest"
+}

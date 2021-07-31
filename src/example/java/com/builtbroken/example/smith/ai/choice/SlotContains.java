@@ -1,9 +1,11 @@
 package com.builtbroken.example.smith.ai.choice;
 
 import com.builtbroken.builder.converter.ConverterRefs;
+import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
@@ -19,10 +21,12 @@ import java.util.function.Consumer;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-24.
  */
-@JsonTemplate(type = "smith:slot.contains")
+@JsonTemplate(value = SlotContains.TEMPLATE_ID, registry = TreeTemplateTypes.CHOICE)
 @NoArgsConstructor(access = AccessLevel.NONE)
 public final class SlotContains extends WorldChoice<SlotContains> implements IMemoryAction
 {
+    public static final String TEMPLATE_ID = "smith:slot.contains";
+
     @JsonObjectWiring(jsonFields = "item", objectType = "game:content.item")
     protected Item item;
 
@@ -65,10 +69,17 @@ public final class SlotContains extends WorldChoice<SlotContains> implements IMe
      * @param name to give this logic check
      * @return new instance
      */
-    public static SlotContains build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    @JsonConstructor
+    public static SlotContains build(@JsonMapping(keys = "name", type = ConverterRefs.STRING, required = true) String name)
     {
         final SlotContains object = new SlotContains();
         object.name = name;
         return object;
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }

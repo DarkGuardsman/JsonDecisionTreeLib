@@ -4,8 +4,9 @@ import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.data.IJsonGeneratedObject;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
+import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.action.IActionChoice;
@@ -15,25 +16,26 @@ import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
-@JsonTemplate(type = DTReferences.JSON_ACTION_BRANCH)
+@JsonTemplate(value = ActionBranch.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 public class ActionBranch implements IAction<ActionBranch, IWorldContext, IMemoryContext>, IJsonGeneratedObject
 {
+    public static final String TEMPLATE_ID = TreeTemplateTypes.ACTION + ".branch";
     private String name;
 
     @JsonMapping(keys = "priority", type = ConverterRefs.INT)
     public int priority = 0;
 
-    @JsonMapping(keys = "choice", type = DTReferences.JSON_ACTION_CHOICE, required = true)
+    @JsonObjectWiring(jsonFields = "choice", objectType = TreeTemplateTypes.CHOICE, required = true)
     public IActionChoice choice;
 
-    @JsonMapping(keys = "true", type = DTReferences.JSON_ACTION, required = true)
+    @JsonObjectWiring(jsonFields = "true", objectType = TreeTemplateTypes.ACTION, required = true)
     public IAction trueAction;
 
-    @JsonMapping(keys = "false", type = DTReferences.JSON_ACTION, required = true)
+    @JsonObjectWiring(jsonFields = "false", objectType = TreeTemplateTypes.ACTION, required = true)
     public IAction falseAction;
 
     @JsonConstructor()
-    public static ActionBranch build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    public static ActionBranch build(@JsonMapping(keys = "name", type = ConverterRefs.STRING, required = true) String name)
     {
         ActionBranch action = new ActionBranch();
         action.name = name;
@@ -41,9 +43,15 @@ public class ActionBranch implements IAction<ActionBranch, IWorldContext, IMemor
     }
 
     @Override
-    public String getJsonType()
+    public String getJsonTemplateID()
     {
-        return DTReferences.JSON_ACTION_BRANCH;
+        return TEMPLATE_ID;
+    }
+
+    @Override
+    public String getJsonRegistryID()
+    {
+        return TreeTemplateTypes.ACTION;
     }
 
     @Override

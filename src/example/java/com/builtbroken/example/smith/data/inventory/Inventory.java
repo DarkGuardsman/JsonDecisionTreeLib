@@ -116,7 +116,7 @@ public class Inventory
         final Item slotContents = slot.getItem();
 
         //Validate we have something to move
-        if (slotContents != null && slot.getCount() > 0)
+        if (slotContents != null && slot.getCount() >= removeCount)
         {
             //Check if a move would work
             final int simulatedAdd = targetInventory.addItemToInventory(slotContents, removeCount, true);
@@ -145,7 +145,7 @@ public class Inventory
      * @param simulate        when set to true will calculates results without editing inventory
      * @return true if items were moved
      */
-    public boolean moveItemsToInventory(Inventory targetInventory, Item itemRemoving, int removeCount, boolean simulate)
+    public boolean moveAllItemsToInventory(Inventory targetInventory, Item itemRemoving, int removeCount, boolean simulate)
     {
         final List<Slot> slotsContainingItem = slots.stream()
                 .filter(slot -> slot.getItem() == itemRemoving)
@@ -188,7 +188,24 @@ public class Inventory
         return itemsAdded;
     }
 
-    public int addItemToSlot(@Nonnull final Item itemToInsert, final int slotIndex, final int count, final boolean simulate)
+    /**
+     *
+     * @param itemToRemove
+     * @param amountToRemove
+     * @param simulate
+     * @return number of items removed
+     */
+    public int removeItemFromInventory(final Item itemToRemove, final int amountToRemove, final boolean simulate)
+    {
+        int itemsRemoved = 0;
+        for (int slotIndex = 0; slotIndex < slots.size() && itemsRemoved < amountToRemove; slotIndex++)
+        {
+            itemsRemoved += removeItemFromSlot(itemToRemove, slotIndex, amountToRemove - itemsRemoved, simulate);
+        }
+        return itemsRemoved;
+    }
+
+    public int addItemToSlot(@Nonnull final Item itemToInsert, final int slotIndex, final int amountToAdd, final boolean simulate)
     {
         final Slot slot = getSlot(slotIndex);
         final Item slotContents = slot.getItem();
@@ -202,7 +219,7 @@ public class Inventory
             if (roomLeft > 0)
             {
                 //Figure out how much we can store
-                final int itemsToAdd = Math.min(count, roomLeft);
+                final int itemsToAdd = Math.min(amountToAdd, roomLeft);
 
                 //Do insert
                 if (!simulate)
@@ -211,6 +228,27 @@ public class Inventory
                 }
                 return itemsToAdd;
             }
+        }
+        return 0;
+    }
+
+    public int removeItemFromSlot(@Nonnull final Item itemFromSlot, final int slotIndex, final int amountToRemove, final boolean simulate)
+    {
+        final Slot slot = getSlot(slotIndex);
+        final Item slotContents = slot.getItem();
+
+        //Checking if item can be in slot
+        if (slotContents == itemFromSlot && slot.getCount() > 0)
+        {
+            //Figure out how much we can store
+            final int itemsToRemove = Math.min(amountToRemove, slot.getCount());
+
+            //Do insert
+            if (!simulate)
+            {
+                setSlot(slotIndex, itemFromSlot, slot.getCount() - itemsToRemove);
+            }
+            return itemsToRemove;
         }
         return 0;
     }

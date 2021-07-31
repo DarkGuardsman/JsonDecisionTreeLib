@@ -3,7 +3,7 @@ package com.builtbroken.decisiontree.data.action;
 import com.builtbroken.builder.data.IJsonGeneratedObject;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
@@ -18,7 +18,7 @@ public abstract class Action<A extends Action, W extends IWorldContext, M extend
 
     protected String name;
 
-    @JsonObjectWiring(jsonFields = "next", objectType = DTReferences.JSON_ACTION)
+    @JsonObjectWiring(jsonFields = "next", objectType = TreeTemplateTypes.ACTION)
     public IAction next;
 
     @Override
@@ -59,8 +59,8 @@ public abstract class Action<A extends Action, W extends IWorldContext, M extend
     }
 
     @Override
-    public String getJsonType()
+    public String getJsonRegistryID()
     {
-        return DTReferences.JSON_ACTION;
+        return TreeTemplateTypes.ACTION;
     }
 }

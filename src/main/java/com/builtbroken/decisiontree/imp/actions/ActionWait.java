@@ -3,7 +3,7 @@ package com.builtbroken.decisiontree.imp.actions;
 import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
@@ -19,9 +19,10 @@ import java.util.function.Consumer;
 /** Simple AI action to wait
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-25.
  */
-@JsonTemplate(type = DTReferences.JSON_ACTION_WAIT)
+@JsonTemplate(value = ActionWait.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 public class ActionWait extends Action<ActionWait, IWorldContext, IMemoryContext> implements IMemoryAction
 {
+    public static final String TEMPLATE_ID = TreeTemplateTypes.ACTION + ".wait";
 
     //Memory slot that tracks the wait decrement in the AI's memory
     private IntegerMemory waitTime;
@@ -41,12 +42,6 @@ public class ActionWait extends Action<ActionWait, IWorldContext, IMemoryContext
         wait.name = name;
         wait.waitTime = IntegerMemory.build(name + "_wait");
         return wait;
-    }
-
-    @Override
-    public String getJsonType()
-    {
-        return DTReferences.JSON_ACTION_WAIT;
     }
 
     @Nonnull
@@ -92,5 +87,11 @@ public class ActionWait extends Action<ActionWait, IWorldContext, IMemoryContext
     public void collectMemory(Consumer<IMemorySlot> collector)
     {
         collector.accept(waitTime);
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }

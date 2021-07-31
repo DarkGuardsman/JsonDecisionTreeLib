@@ -5,42 +5,45 @@ import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.action.IActionTree;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.memory.IMemoryModel;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.data.memory.MemoryModel;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-@JsonTemplate(type = DTReferences.JSON_ACTOR)
+@JsonTemplate(TreeTemplateTypes.TREE)
+@NoArgsConstructor(access = AccessLevel.NONE)
 public class ActionTree implements IActionTree, IJsonGeneratedObject
 {
-
     private String name;
 
-    @JsonObjectWiring(jsonFields = "starts", objectType = DTReferences.JSON_ACTION_SET)
+    @JsonObjectWiring(jsonFields = "start", objectType = TreeTemplateTypes.ACTION, required = true)
     private IAction treeStart;
 
     private MemoryModel memoryModel;
 
     @JsonConstructor
-    public static ActionTree build(@JsonMapping(keys = "name", type = "string") String name)
+    public static ActionTree build(@JsonMapping(keys = "name", type = "string", required = true) String name)
     {
-        ActionTree actionTree = new ActionTree();
+        final ActionTree actionTree = new ActionTree();
         actionTree.name = name;
         return actionTree;
     }
 
     @Override
-    public String getJsonType()
+    public String getJsonTemplateID()
     {
-        return DTReferences.JSON_ACTOR;
+        return TreeTemplateTypes.TREE;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class ActionTree implements IActionTree, IJsonGeneratedObject
     @Override
     public IActionTree copy()
     {
-        ActionTree tree = build(name);
+        final ActionTree tree = build(name);
         if (tree.treeStart != null)
         {
             tree.treeStart = (IAction) treeStart.copy();

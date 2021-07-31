@@ -1,0 +1,7 @@
+{
+  "type": "smith:inventory.contains",
+  "name": "smith:chest.has.fuel",
+  "item": "fuel",
+  "count": "1",
+  "exact": false
+}

@@ -16,7 +16,6 @@ import java.util.function.Consumer;
  */
 public class ActorLogic
 {
-
     public ActionTree tree;
 
     //Information about the actor

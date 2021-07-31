@@ -1,7 +1,7 @@
 package com.builtbroken.decisiontree.imp.choice;
 
 import com.builtbroken.builder.data.IJsonGeneratedObject;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IActionChoice;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
@@ -11,13 +11,12 @@ import com.builtbroken.decisiontree.api.context.world.IWorldContext;
  */
 public abstract class Choice<C extends Choice, W extends IWorldContext, M extends IMemoryContext> implements IJsonGeneratedObject, IActionChoice<C, W, M>
 {
-
     protected String name;
 
     @Override
-    public String getJsonType()
+    public String getJsonRegistryID()
     {
-        return DTReferences.JSON_ACTION_CHOICE;
+        return TreeTemplateTypes.CHOICE;
     }
 
     @Override

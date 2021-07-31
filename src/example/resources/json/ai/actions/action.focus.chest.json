@@ -1,0 +1,5 @@
+{
+  "type": "smith:memory.update.target.tile",
+  "name" : "smith:focus.chest",
+  "tile": "chest"
+}

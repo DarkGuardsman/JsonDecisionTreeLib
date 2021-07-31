@@ -18,6 +18,10 @@ sourceSets {
             srcDir 'src/main/java'
             srcDir 'src/example/java'
         }
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'src/example/resources'
+        }
     }
 }
 
@@ -28,7 +32,7 @@ repositories {
 dependencies {
     compile 'com.google.guava:guava:11.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile files('./libs/JsonContentBuilderLib-0.1.0.jar')
+    compile files('./libs/JsonContentBuilderLib-0.4.0-all.jar')
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 
     //Junit5

@@ -4,7 +4,7 @@ import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
@@ -13,9 +13,10 @@ import com.builtbroken.decisiontree.data.action.Action;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-@JsonTemplate(type = DTReferences.JSON_ACTION_PRINT_LINE)
+@JsonTemplate(value = ActionPrintln.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 public class ActionPrintln extends Action<ActionPrintln, IWorldContext, IMemoryContext>
 {
+    public static final String TEMPLATE_ID = TreeTemplateTypes.ACTION + ".print.line";
 
     @JsonMapping(keys = "print", type = ConverterRefs.STRING)
     public String lineToPrint = null;
@@ -29,12 +30,6 @@ public class ActionPrintln extends Action<ActionPrintln, IWorldContext, IMemoryC
         ActionPrintln println = new ActionPrintln();
         println.name = name;
         return println;
-    }
-
-    @Override
-    public String getJsonType()
-    {
-        return DTReferences.JSON_ACTION_PRINT_LINE;
     }
 
     @Override
@@ -64,5 +59,11 @@ public class ActionPrintln extends Action<ActionPrintln, IWorldContext, IMemoryC
         super.copyInto(action);
         action.lineToPrint = lineToPrint;
         action.printContext = printContext;
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }

@@ -1,0 +1,6 @@
+{
+  "type": "game:item",
+  "id": "ore",
+  "display_name": "Ore",
+  "stack_size": 3
+}

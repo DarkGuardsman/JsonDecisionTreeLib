@@ -1,0 +1,5 @@
+{
+  "type": "smith:memory.update.target.tile",
+  "name" : "smith:focus.furnace",
+  "tile": "furnace"
+}

@@ -1,7 +1,7 @@
 package com.builtbroken.decisiontree.imp.choice;
 
 import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public abstract class MemoryChoice<C extends MemoryChoice> extends Choice<C, IWorldContext, IMemoryContext> implements IMemoryAction
 {
 
-    @JsonObjectWiring(jsonFields = "memory", objectType = DTReferences.JSON_MEMORY)
+    @JsonObjectWiring(jsonFields = "memory", objectType = TreeTemplateTypes.MEMORY)
     protected IMemorySlot memorySlot;
 
     @Override

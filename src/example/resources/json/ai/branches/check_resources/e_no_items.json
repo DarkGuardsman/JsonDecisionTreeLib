@@ -1,0 +1,5 @@
+{
+  "type": "builtbroken:ai.logic.action.print.line",
+  "name": "smith:furnace.fuel.check.error",
+  "print": "Chest contains no fuel items"
+}

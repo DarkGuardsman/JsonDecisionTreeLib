@@ -1,7 +1,7 @@
 package com.builtbroken.example.smith.data.inventory;
 
 import com.builtbroken.example.smith.data.content.Item;
-import com.builtbroken.example.smith.data.content.Items;
+import com.builtbroken.example.smith.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -17,8 +17,8 @@ import java.util.stream.Stream;
  */
 class InventoryTest
 {
-    static final Item itemA = new Item(0, 5, "ItemA");
-    static final Item itemB = new Item(0, 5, "ItemB");
+    static final Item itemA = Item.build("test:item.a");
+    static final Item itemB = Item.build("test:item.b");
 
     @Nested
     class Initialization
@@ -206,6 +206,28 @@ class InventoryTest
         }
 
         @Test
+        void moveItems_lessThanRequested_actual() {
+            final Inventory fromInventory = new Inventory(5, 10);
+            fromInventory.setSlot(0, itemA, 5);
+            fromInventory.setSlot(1, itemB, 2);
+            fromInventory.setSlot(2, itemA, 5);
+            fromInventory.setSlot(3, itemA, 1);
+
+            final Inventory targetInventory = new Inventory(5, 10);
+
+            Assertions.assertFalse(fromInventory.moveItemToInventory(targetInventory, 0, 10, false));
+
+            //Validate target counts
+            Assertions.assertEquals(0, targetInventory.countItems(itemA));
+            Assertions.assertEquals(50, targetInventory.countItems(null));
+
+            //Validate from counts
+            Assertions.assertEquals(11, fromInventory.countItems(itemA));
+            Assertions.assertEquals(2, fromInventory.countItems(itemB));
+            Assertions.assertEquals(10, fromInventory.countItems(null));
+        }
+
+        @Test
         void moveItems_simulate() {
             final Inventory fromInventory = new Inventory(5, 10);
             fromInventory.setSlot(0, itemA, 5);
@@ -240,7 +262,7 @@ class InventoryTest
 
             final Inventory targetInventory = new Inventory(5, 10);
 
-            Assertions.assertTrue(fromInventory.moveItemsToInventory(targetInventory, itemA, 6, false));
+            Assertions.assertTrue(fromInventory.moveAllItemsToInventory(targetInventory, itemA, 6, false));
 
             //Validate target counts
             Assertions.assertEquals(6, targetInventory.countItems(itemA));
@@ -262,7 +284,7 @@ class InventoryTest
 
             final Inventory targetInventory = new Inventory(5, 10);
 
-            Assertions.assertTrue(fromInventory.moveItemsToInventory(targetInventory, itemA, 6, true));
+            Assertions.assertTrue(fromInventory.moveAllItemsToInventory(targetInventory, itemA, 6, true));
 
             //Validate target counts
             Assertions.assertEquals(0, targetInventory.countItems(itemA));

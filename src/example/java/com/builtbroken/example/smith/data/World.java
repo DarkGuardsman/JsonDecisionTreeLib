@@ -16,9 +16,12 @@ import lombok.Data;
 @Data
 public class World extends ActionContext implements IWorldContext
 {
+    public static final int AI_SLOTS = 5;
+    public static final int AI_SLOT_LIMIT = 10;
+
     private final Furnace furnace = new Furnace();
     private final Chest chest = new Chest();
-    private final Inventory aiInventory = new Inventory(5, 10);
+    private final Inventory aiInventory = new Inventory(AI_SLOTS, AI_SLOT_LIMIT);
 
     public void tick(int tick)
     {

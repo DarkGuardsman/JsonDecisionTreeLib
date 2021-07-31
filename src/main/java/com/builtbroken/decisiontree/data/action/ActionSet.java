@@ -5,7 +5,7 @@ import com.builtbroken.builder.data.IJsonGeneratedObject;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
@@ -19,9 +19,10 @@ import java.util.function.Consumer;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-19.
  */
-@JsonTemplate(type = DTReferences.JSON_ACTION_SET)
+@JsonTemplate(value = ActionSet.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 public class ActionSet extends Action<ActionSet, IWorldContext, IMemoryContext> implements IJsonGeneratedObject
 {
+    public static final String TEMPLATE_ID = TreeTemplateTypes.ACTION + ".set";
 
     @JsonMapping(keys = "action", type = ConverterRefs.LIST)
     private final List<IAction> actions = new ArrayList();
@@ -30,7 +31,7 @@ public class ActionSet extends Action<ActionSet, IWorldContext, IMemoryContext> 
     private boolean runAll = false;
 
     @JsonConstructor()
-    public static ActionSet build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    public static ActionSet build(@JsonMapping(keys = "name", type = ConverterRefs.STRING, required = true) String name)
     {
         ActionSet action = new ActionSet();
         action.name = name;
@@ -71,9 +72,9 @@ public class ActionSet extends Action<ActionSet, IWorldContext, IMemoryContext> 
     }
 
     @Override
-    public String getJsonType()
+    public String getJsonTemplateID()
     {
-        return DTReferences.JSON_ACTION_SET;
+        return TEMPLATE_ID;
     }
 
     @Override

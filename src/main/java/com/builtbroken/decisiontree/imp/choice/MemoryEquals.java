@@ -4,16 +4,18 @@ import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
-@JsonTemplate(type = DTReferences.JSON_MEMORY_VALUE)
+@JsonTemplate(value = MemoryEquals.TEMPLATE_ID, registry = TreeTemplateTypes.CHOICE)
 public class MemoryEquals extends MemoryChoice<MemoryEquals>
 {
+    public static final String TEMPLATE_ID = TreeTemplateTypes.CHOICE + ".memory.value";
+
     @JsonMapping(keys = "value", type = ConverterRefs.OBJECT, required = true)
     private Object value;
 
@@ -41,5 +43,11 @@ public class MemoryEquals extends MemoryChoice<MemoryEquals>
     {
         super.copyInto(choice);
         choice.value = value;
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }

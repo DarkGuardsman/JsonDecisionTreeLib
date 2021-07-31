@@ -1,0 +1,6 @@
+{
+  "type" : "builtbroken:ai.logic.action.connector",
+  "name": "smith:furnace.fuel.start",
+  "invoke": "",
+  "next": ""
+}

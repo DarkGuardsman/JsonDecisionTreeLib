@@ -1,0 +1,6 @@
+{
+  "type": "game:item",
+  "id": "fuel",
+  "display_name": "Fuel",
+  "stack_size": 10
+}

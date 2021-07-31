@@ -1,9 +1,11 @@
 package com.builtbroken.example.smith.ai.choice;
 
 import com.builtbroken.builder.converter.ConverterRefs;
+import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonObjectWiring;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
@@ -19,10 +21,12 @@ import java.util.function.Consumer;
 /**
  * Created by Robin Seifert on 2021-06-17.
  */
-@JsonTemplate(type = "smith:inventory.contains")
+@JsonTemplate(value = InventoryContains.TEMPLATE_ID, registry = TreeTemplateTypes.CHOICE)
 @NoArgsConstructor(access = AccessLevel.NONE)
 public final class InventoryContains extends WorldChoice<InventoryContains> implements IMemoryAction
 {
+    public static final String TEMPLATE_ID = "smith:inventory.contains";
+
     @JsonObjectWiring(jsonFields = "item", objectType = "game:content.item")
     protected Item item;
 
@@ -31,6 +35,7 @@ public final class InventoryContains extends WorldChoice<InventoryContains> impl
 
     @JsonMapping(keys = "exact", type = ConverterRefs.BOOLEAN)
     protected boolean exact = false;
+
 
     @Override
     public void copyInto(InventoryContains choice)
@@ -64,10 +69,17 @@ public final class InventoryContains extends WorldChoice<InventoryContains> impl
      * @param name to give this logic check
      * @return new instance
      */
-    public static InventoryContains build(@JsonMapping(keys = "name", type = ConverterRefs.STRING) String name)
+    @JsonConstructor
+    public static InventoryContains build(@JsonMapping(keys = "name", type = ConverterRefs.STRING, required = true) String name)
     {
         final InventoryContains object = new InventoryContains();
         object.name = name;
         return object;
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }

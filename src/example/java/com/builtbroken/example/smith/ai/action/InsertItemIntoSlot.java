@@ -21,28 +21,29 @@ import javax.annotation.Nullable;
 /**
  * Created by Robin Seifert on 6/17/2021.
  */
-@JsonTemplate(value = TakeItemFromSlot.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
+@JsonTemplate(value = InsertItemIntoSlot.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 @NoArgsConstructor(access = AccessLevel.NONE)
-public class TakeItemFromSlot extends WorldAction<TakeItemFromSlot>
+public class InsertItemIntoSlot extends WorldAction<InsertItemIntoSlot>
 {
-    public static final String TEMPLATE_ID = "smith:slot.remove.item";
+    public static final String TEMPLATE_ID = "smith:slot.insert";
 
     @JsonObjectWiring(jsonFields = "item", objectType = JsonKeys.ITEM)
     protected Item item;
 
     @JsonMapping(keys = "count", type = ConverterRefs.INT, required = true)
-    protected int removeCount;
-
-    @JsonMapping(keys = "slot", type = ConverterRefs.INT, required = true)
-    protected int slot;
+    protected int count;
 
     @JsonMapping(keys = "exact", type = ConverterRefs.BOOLEAN)
     protected boolean exact = false;
 
+
+    @JsonMapping(keys = "slot", type = ConverterRefs.INT, required = true)
+    protected int slot;
+
     @JsonConstructor
-    public static TakeItemFromSlot build(@JsonMapping(keys = "name", type = "string", required = true) String name)
+    public static InsertItemIntoSlot build(@JsonMapping(keys = "name", type = "string", required = true) String name)
     {
-        final TakeItemFromSlot newObject = new TakeItemFromSlot();
+        final InsertItemIntoSlot newObject = new InsertItemIntoSlot();
         newObject.name = name;
         return newObject;
     }
@@ -53,19 +54,31 @@ public class TakeItemFromSlot extends WorldAction<TakeItemFromSlot>
     {
         final boolean result = AiHelper.actOnInventory(world, memory,
                 (inventory) -> {
-                    if(inventory.hasItemInSlot(slot, item, removeCount, exact)) {
-                        return inventory.moveItemToInventory(world.getAiInventory(), slot, removeCount, false);
+
+                    //Calculate how many items we can move
+                    final int added = inventory.addItemToSlot(item, slot, count, true);
+                    final int removed = world.getAiInventory().removeItemFromInventory(item, count, true);
+                    if (exact && added < count)
+                    {
+                        return false;
                     }
-                    return false;
+
+                    //Calculate actual target move amount
+                    final int targetMoveCount = Math.min(added, removed);
+
+                    //Do move
+                    world.getAiInventory().removeItemFromInventory(item, targetMoveCount, false);
+                    inventory.addItemToSlot(item, slot, targetMoveCount, false);
+                    return true;
                 });
         return result ? ActionResult.STEP : ActionResult.END;
     }
 
     @Override
-    public void copyInto(TakeItemFromSlot choice)
+    public void copyInto(InsertItemIntoSlot choice)
     {
         choice.item = item;
-        choice.removeCount = removeCount;
+        choice.count = count;
         choice.slot = slot;
         choice.exact = exact;
     }

@@ -1,0 +1,6 @@
+{
+  "type" : "builtbroken:ai.logic.action.connector",
+  "name": "smith:furnace.fuel.focus.check",
+  "invoke": "smith:focus.chest",
+  "next": "smith:furnace.fuel.check.chest"
+}

@@ -5,7 +5,7 @@ import com.builtbroken.decisiontree.imp.memory.value.StringMemoryValue;
 import com.builtbroken.example.smith.SingleMemoryStub;
 import com.builtbroken.example.smith.ai.MemorySlots;
 import com.builtbroken.example.smith.data.World;
-import com.builtbroken.example.smith.data.content.Items;
+import com.builtbroken.example.smith.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

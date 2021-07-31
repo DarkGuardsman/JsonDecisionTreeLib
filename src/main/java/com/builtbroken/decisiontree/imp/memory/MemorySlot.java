@@ -1,6 +1,7 @@
 package com.builtbroken.decisiontree.imp.memory;
 
-import com.builtbroken.decisiontree.DTReferences;
+import com.builtbroken.builder.data.IJsonGeneratedObject;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.api.memory.IMemoryValue;
@@ -10,11 +11,22 @@ import javax.annotation.Nonnull;
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-20.
  */
-public abstract class MemorySlot<S extends MemorySlot<S, O, M>, O extends Object, M extends IMemoryValue<O, M>> implements IMemorySlot<S, O, M>
+public abstract class MemorySlot<S extends MemorySlot<S, O, M>, O extends Object, M extends IMemoryValue<O, M>> implements IMemorySlot<S, O, M>, IJsonGeneratedObject
 {
-
     protected String name;
     private int id;
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TreeTemplateTypes.MEMORY;
+    }
+
+    @Override
+    public String getJsonUniqueID()
+    {
+        return name;
+    }
 
     @Override
     public String getUniqueName()
@@ -25,7 +37,7 @@ public abstract class MemorySlot<S extends MemorySlot<S, O, M>, O extends Object
     @Override
     public String getDisplayValue(IMemoryContext memory)
     {
-        return DTReferences.JSON_MEMORY;
+        return TreeTemplateTypes.MEMORY;
     }
 
     @Override

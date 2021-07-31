@@ -1,0 +1,6 @@
+{
+  "type": "game:item",
+  "id": "ingots",
+  "display_name": "Ingots",
+  "stack_size": 5
+}

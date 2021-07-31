@@ -1,8 +1,10 @@
 package com.builtbroken.example.smith.ai.action;
 
 import com.builtbroken.builder.converter.ConverterRefs;
+import com.builtbroken.builder.mapper.anno.JsonConstructor;
 import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
+import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.action.ActionResult;
 import com.builtbroken.decisiontree.api.action.IMemoryAction;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
@@ -20,12 +22,22 @@ import java.util.function.Consumer;
 /**
  * Created by Robin Seifert on 6/16/2021.
  */
-@JsonTemplate(type = "smith:memory.update.target.tile")
+@JsonTemplate(value = SwitchTargetTile.TEMPLATE_ID, registry = TreeTemplateTypes.ACTION)
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class SwitchTargetTile extends WorldAction<SwitchTargetTile> implements IMemoryAction
 {
+    public static final String TEMPLATE_ID = "smith:memory.update.target.tile";
+
     @JsonMapping(keys = "tile", type = ConverterRefs.STRING, required = true)
     protected String tile;
+
+    @JsonConstructor
+    public static SwitchTargetTile build(@JsonMapping(keys = "name", type = "string", required = true) String name)
+    {
+        final SwitchTargetTile newObject = new SwitchTargetTile();
+        newObject.name = name;
+        return newObject;
+    }
 
     @Nonnull
     @Override
@@ -47,5 +59,11 @@ public class SwitchTargetTile extends WorldAction<SwitchTargetTile> implements I
     public void collectMemory(Consumer<IMemorySlot> collector)
     {
         collector.accept(MemorySlots.MEMORY_FOCUSED_TILE);
+    }
+
+    @Override
+    public String getJsonTemplateID()
+    {
+        return TEMPLATE_ID;
     }
 }
