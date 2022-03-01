@@ -30,10 +30,10 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.guava:guava:11.0.2'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile files('./libs/JsonContentBuilderLib-0.4.0-all.jar')
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation 'com.google.guava:guava:11.0.2'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation files('./libs/JsonContentBuilderLib-0.4.0-all.jar')
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
 
     //Junit5
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
