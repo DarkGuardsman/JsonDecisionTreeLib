@@ -9,21 +9,8 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-group = 'com.darkguardsman.jsondecisiontree'
+group = 'com.darkguardsman.example.jsondecisiontree'
 version = '0.1.0'
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-            srcDir 'src/example/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-            srcDir 'src/example/resources'
-        }
-    }
-}
 
 repositories {
     mavenCentral()
@@ -32,8 +19,9 @@ repositories {
 dependencies {
     implementation 'com.google.guava:guava:11.0.2'
     implementation 'com.google.code.gson:gson:2.8.0'
-    implementation files('./libs/JsonContentBuilderLib-0.4.0-all.jar')
+    implementation files('../libs/JsonContentBuilderLib-0.4.0-all.jar')
     implementation 'com.google.code.findbugs:jsr305:3.0.1'
+    implementation project(':library')
 
     //Junit5
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
