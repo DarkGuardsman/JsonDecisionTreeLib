@@ -3,7 +3,7 @@ package com.builtbroken.example.smith;
 import com.builtbroken.builder.data.DataFileLoad;
 import com.builtbroken.builder.handler.IJsonObjectHandler;
 import com.builtbroken.builder.loader.MainContentLoader;
-import com.builtbroken.example.smith.data.content.Item;
+import com.builtbroken.example.game.content.Item;
 import com.google.gson.JsonObject;
 import lombok.AccessLevel;
 import lombok.Data;

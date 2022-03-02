@@ -1,6 +1,6 @@
-package com.builtbroken.example.smith.data.tiles;
+package com.builtbroken.example.game.content.tiles;
 
-import com.builtbroken.example.smith.data.inventory.Inventory;
+import com.builtbroken.example.game.inventory.Inventory;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;

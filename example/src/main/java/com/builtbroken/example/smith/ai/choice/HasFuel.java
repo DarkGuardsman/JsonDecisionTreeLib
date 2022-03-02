@@ -6,7 +6,7 @@ import com.builtbroken.builder.mapper.anno.JsonMapping;
 import com.builtbroken.builder.mapper.anno.JsonTemplate;
 import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
-import com.builtbroken.example.smith.data.World;
+import com.builtbroken.example.game.World;
 
 /**
  * Created by Dark(DarkGuardsman, Robert) on 2019-06-24.

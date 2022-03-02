@@ -27,7 +27,7 @@ public class ActorLogic
     private IMemoryContext memory;
     private IWorldContext world;
 
-    private Consumer<String> errorHandler = (string) -> System.out.println("Error: " + string);
+    private final Consumer<String> errorHandler = (string) -> System.out.println("Error: " + string);
 
     public ActorLogic(IActorContext actorContext)
     {

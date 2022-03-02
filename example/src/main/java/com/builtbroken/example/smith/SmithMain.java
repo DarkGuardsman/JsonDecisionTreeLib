@@ -7,7 +7,7 @@ import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.data.ActionTree;
 import com.builtbroken.decisiontree.data.context.ActorContext;
 import com.builtbroken.decisiontree.logic.ActorLogic;
-import com.builtbroken.example.smith.data.World;
+import com.builtbroken.example.game.Game;
 
 import java.io.File;
 
@@ -19,29 +19,41 @@ public class SmithMain
     public static void main(String... args)
     {
         //Setup
-        final ActorLogic actorLogic = new ActorLogic(new ActorContext("smithy"));
-        final World world = new World();
+        loadContent();
 
-        //Run content engine
+        //Build game
+        final Game game = new Game();
+        game.addActor(generateAI());
+
+        //Run game
+        startLoop(game, 100000);
+    }
+
+    //Handles loading all the JSON data from the file system
+    private static void loadContent()
+    {
         ContentBuilderLib.getMainLoader().addFileLocator(new FileLocatorSimple(new File(System.getProperty("user.dir"), "/json")));
         ContentBuilderLib.setup();
         ContentBuilderLib.load();
+    }
 
-        //GET AI
+    //Generates our main AI, future this might be more than 1 AI interacting with the same world or each other
+    private static ActorLogic generateAI() {
+        final ActorLogic actorLogic = new ActorLogic(new ActorContext("smithy"));
         final IJsonObjectHandler<ActionTree> handler = (IJsonObjectHandler<ActionTree>) ContentBuilderLib.getMainLoader()
                 .jsonObjectHandlerRegistry.getHandler(TreeTemplateTypes.TREE);
         actorLogic.tree = handler.getObject("smith:furnace.insert.fuel");
+        return actorLogic;
+    }
 
-        //init
-        actorLogic.setStage(world, null, false);
-
-        //Run loop
+    //Generic game loop
+    private static void startLoop(final Game game, final int tickCutOff)
+    {
         try
         {
             int tick = 0;
-            boolean running = true;
             long lastLoopTime = System.currentTimeMillis();
-            while (running)
+            while (tick <= tickCutOff && game.isRunning)
             {
                 //Increase tick
                 tick++;
@@ -49,16 +61,13 @@ public class SmithMain
                 //Logging
                 System.out.println("Tick: " + tick);
 
-                //Tick world
-                world.tick(tick);
-
-                //Tick AI
-                actorLogic.update(tick, 0);
-                running = tick <= 100000; //TODO tie to AI state
+                //Tick game
+                game.tick(tick, 0);
 
                 lastLoopTime = sleep(lastLoopTime); //TODO track delta and pass into loop
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
-package com.builtbroken.example.smith.data.inventory;
+package com.builtbroken.example.game.inventory;
 
-import com.builtbroken.example.smith.data.content.Item;
+import com.builtbroken.example.game.content.Item;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;

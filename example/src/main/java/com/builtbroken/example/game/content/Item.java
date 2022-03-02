@@ -1,4 +1,4 @@
-package com.builtbroken.example.smith.data.content;
+package com.builtbroken.example.game.content;
 
 import com.builtbroken.builder.converter.ConverterRefs;
 import com.builtbroken.builder.data.IJsonGeneratedObject;

@@ -11,7 +11,7 @@ import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.decisiontree.api.memory.IMemorySlot;
 import com.builtbroken.decisiontree.imp.memory.value.StringMemoryValue;
 import com.builtbroken.example.smith.ai.MemorySlots;
-import com.builtbroken.example.smith.data.World;
+import com.builtbroken.example.game.World;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

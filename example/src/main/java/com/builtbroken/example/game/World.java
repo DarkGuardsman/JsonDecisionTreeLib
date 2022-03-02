@@ -1,13 +1,13 @@
-package com.builtbroken.example.smith.data;
+package com.builtbroken.example.game;
 
 import com.builtbroken.decisiontree.api.context.world.IWorldAccessType;
 import com.builtbroken.decisiontree.api.context.world.IWorldAccessor;
 import com.builtbroken.decisiontree.api.context.world.IWorldContext;
 import com.builtbroken.decisiontree.api.context.world.IWorldPointer;
 import com.builtbroken.decisiontree.data.context.ActionContext;
-import com.builtbroken.example.smith.data.inventory.Inventory;
-import com.builtbroken.example.smith.data.tiles.Chest;
-import com.builtbroken.example.smith.data.tiles.Furnace;
+import com.builtbroken.example.game.inventory.Inventory;
+import com.builtbroken.example.game.content.tiles.Chest;
+import com.builtbroken.example.game.content.tiles.Furnace;
 import lombok.Data;
 
 /**

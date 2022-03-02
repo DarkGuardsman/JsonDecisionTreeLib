@@ -1,8 +1,8 @@
 package com.builtbroken.example.smith.ai;
 
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
-import com.builtbroken.example.smith.data.World;
-import com.builtbroken.example.smith.data.inventory.Inventory;
+import com.builtbroken.example.game.World;
+import com.builtbroken.example.game.inventory.Inventory;
 
 import java.util.function.Function;
 

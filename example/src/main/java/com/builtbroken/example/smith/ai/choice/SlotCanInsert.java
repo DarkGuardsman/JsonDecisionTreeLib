@@ -9,8 +9,8 @@ import com.builtbroken.decisiontree.TreeTemplateTypes;
 import com.builtbroken.decisiontree.api.context.IMemoryContext;
 import com.builtbroken.example.smith.ai.AiHelper;
 import com.builtbroken.example.smith.data.JsonKeys;
-import com.builtbroken.example.smith.data.World;
-import com.builtbroken.example.smith.data.content.Item;
+import com.builtbroken.example.game.World;
+import com.builtbroken.example.game.content.Item;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

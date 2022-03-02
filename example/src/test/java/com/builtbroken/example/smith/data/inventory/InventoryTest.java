@@ -1,6 +1,8 @@
 package com.builtbroken.example.smith.data.inventory;
 
-import com.builtbroken.example.smith.data.content.Item;
+import com.builtbroken.example.game.inventory.Inventory;
+import com.builtbroken.example.game.inventory.Slot;
+import com.builtbroken.example.game.content.Item;
 import com.builtbroken.example.smith.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

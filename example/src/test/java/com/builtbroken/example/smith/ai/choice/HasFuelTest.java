@@ -1,6 +1,6 @@
 package com.builtbroken.example.smith.ai.choice;
 
-import com.builtbroken.example.smith.data.World;
+import com.builtbroken.example.game.World;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
