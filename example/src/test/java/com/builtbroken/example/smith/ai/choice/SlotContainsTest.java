@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
  */
 class SlotContainsTest
 {
+    private Items itemList;
     private World world;
     private IMemoryContext memory;
     private SlotContains slotContains;
@@ -22,6 +23,10 @@ class SlotContainsTest
     @BeforeEach
     void beforeEach()
     {
+        //Setup items
+        itemList = new Items();
+        itemList.setup();
+
         //Setup world
         world = new World();
 
@@ -33,17 +38,17 @@ class SlotContainsTest
         //Setup logic block
         slotContains = SlotContains.build("smith:furnace.check.input");
         slotContains.slot = 1;
-        slotContains.item = Items.ingots;
+        slotContains.item = itemList.getIngots();
     }
 
     @Test
     void containsItem_true()
     {
         //Setup world
-        world.getFurnace().getInventory().setSlot(1, Items.ingots, 2);
+        world.getFurnace().getInventory().setSlot(1, itemList.getIngots(), 2);
 
         //Validate starting conditions
-        Assertions.assertTrue(world.getFurnace().getInventory().hasItemInSlot(1, Items.ingots, 2, true));
+        Assertions.assertTrue(world.getFurnace().getInventory().hasItemInSlot(1, itemList.getIngots(), 2, true));
 
         //Invoke logic
         final boolean result = slotContains.isTrue(world, memory);

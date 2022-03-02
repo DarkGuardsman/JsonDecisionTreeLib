@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
  */
 class InventoryContainsTest
 {
+    private Items itemList;
     private World world;
     private IMemoryContext memory;
     private InventoryContains inventoryContains;
@@ -22,6 +23,10 @@ class InventoryContainsTest
     @BeforeEach
     void beforeEach()
     {
+        //Setup items
+        itemList = new Items();
+        itemList.setup();
+
         //Setup world
         world = new World();
 
@@ -34,16 +39,16 @@ class InventoryContainsTest
         inventoryContains = InventoryContains.build("smith:chest.contains.fuel");
         inventoryContains.count = 4;
         inventoryContains.exact = false;
-        inventoryContains.item = Items.fuel;
+        inventoryContains.item = itemList.getFuel();
     }
 
     @Test
     void containsItem_mixedInventory_true()
     {
         //Setup world
-        world.getChest().getInventory().setSlot(2, Items.ore, 3);
-        world.getChest().getInventory().setSlot(6, Items.ingots, 2);
-        world.getChest().getInventory().setSlot(4, Items.fuel, 5);
+        world.getChest().getInventory().setSlot(2, itemList.getOre(), 3);
+        world.getChest().getInventory().setSlot(6, itemList.getIngots(), 2);
+        world.getChest().getInventory().setSlot(4, itemList.getFuel(), 5);
 
         //Invoke logic
         final boolean result = inventoryContains.isTrue(world, memory);
@@ -56,7 +61,7 @@ class InventoryContainsTest
     void containsItem_exactInventory_true()
     {
         //Setup world
-        world.getChest().getInventory().setSlot(4, Items.fuel, 5);
+        world.getChest().getInventory().setSlot(4, itemList.getFuel(), 5);
 
         //Invoke logic
         final boolean result = inventoryContains.isTrue(world, memory);

@@ -20,6 +20,14 @@ class InventoryTest
     static final Item itemA = Item.build("test:item.a");
     static final Item itemB = Item.build("test:item.b");
 
+    private Items itemList;
+
+    @BeforeEach
+    void setup() {
+        itemList = new Items();
+        itemList.setup();
+    }
+
     @Nested
     class Initialization
     {
@@ -35,64 +43,64 @@ class InventoryTest
         void itemsMatch_true()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 2);
-            Assertions.assertTrue(inventory.hasItemInSlot(0, Items.fuel, 1, false));
+            inventory.setSlot(0, itemList.getFuel(), 2);
+            Assertions.assertTrue(inventory.hasItemInSlot(0, itemList.getFuel(), 1, false));
         }
 
         @Test
         void itemsMatch_false()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.ingots, 2);
-            Assertions.assertFalse(inventory.hasItemInSlot(0, Items.fuel, 1, false));
+            inventory.setSlot(0, itemList.getIngots(), 2);
+            Assertions.assertFalse(inventory.hasItemInSlot(0, itemList.getFuel(), 1, false));
         }
 
         @Test
         void itemsMatch_countExact_true()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 1);
-            Assertions.assertTrue(inventory.hasItemInSlot(0, Items.fuel, 1, true));
+            inventory.setSlot(0, itemList.getFuel(), 1);
+            Assertions.assertTrue(inventory.hasItemInSlot(0, itemList.getFuel(), 1, true));
         }
 
         @Test
         void itemsMatch_countExact_false()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 2);
-            Assertions.assertFalse(inventory.hasItemInSlot(0, Items.fuel, 1, true));
+            inventory.setSlot(0, itemList.getFuel(), 2);
+            Assertions.assertFalse(inventory.hasItemInSlot(0, itemList.getFuel(), 1, true));
         }
 
         @Test
         void itemsMatch_countLessThan()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 2);
-            Assertions.assertFalse(inventory.hasItemInSlot(0, Items.fuel, 5, false));
+            inventory.setSlot(0, itemList.getFuel(), 2);
+            Assertions.assertFalse(inventory.hasItemInSlot(0, itemList.getFuel(), 5, false));
         }
 
         @Test
         void itemsMatch_countEqual()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 5);
-            Assertions.assertTrue(inventory.hasItemInSlot(0, Items.fuel, 5, false));
+            inventory.setSlot(0, itemList.getFuel(), 5);
+            Assertions.assertTrue(inventory.hasItemInSlot(0, itemList.getFuel(), 5, false));
         }
 
         @Test
         void itemsMatch_countEqual_exact()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 5);
-            Assertions.assertTrue(inventory.hasItemInSlot(0, Items.fuel, 5, true));
+            inventory.setSlot(0, itemList.getFuel(), 5);
+            Assertions.assertTrue(inventory.hasItemInSlot(0, itemList.getFuel(), 5, true));
         }
 
         @Test
         void itemsMatch_countGreater()
         {
             final Inventory inventory = new Inventory(1, 10);
-            inventory.setSlot(0, Items.fuel, 5);
-            Assertions.assertFalse(inventory.hasItemInSlot(0, Items.fuel, 10, false));
+            inventory.setSlot(0, itemList.getFuel(), 5);
+            Assertions.assertFalse(inventory.hasItemInSlot(0, itemList.getFuel(), 10, false));
         }
     }
 
@@ -103,42 +111,42 @@ class InventoryTest
         void contains_true()
         {
             final Inventory inventory = new Inventory(5, 10);
-            inventory.setSlot(2, Items.fuel, 2);
-            Assertions.assertTrue(inventory.hasItem(Items.fuel, 1, false));
+            inventory.setSlot(2, itemList.getFuel(), 2);
+            Assertions.assertTrue(inventory.hasItem(itemList.getFuel(), 1, false));
         }
 
         @Test
         void contains_false()
         {
             final Inventory inventory = new Inventory(5, 10);
-            inventory.setSlot(2, Items.ingots, 2);
-            Assertions.assertFalse(inventory.hasItem(Items.fuel, 1, false));
+            inventory.setSlot(2, itemList.getIngots(), 2);
+            Assertions.assertFalse(inventory.hasItem(itemList.getFuel(), 1, false));
         }
 
         @Test
         void contains_emptyInventory_false()
         {
             final Inventory inventory = new Inventory(5, 10);
-            Assertions.assertFalse(inventory.hasItem(Items.fuel, 1, false));
+            Assertions.assertFalse(inventory.hasItem(itemList.getFuel(), 1, false));
         }
 
         @Test
         void contains_mixedInventory_true()
         {
             final Inventory inventory = new Inventory(5, 10);
-            inventory.setSlot(1, Items.ingots, 2);
-            inventory.setSlot(2, Items.ore, 4);
-            inventory.setSlot(3, Items.fuel, 2);
-            Assertions.assertTrue(inventory.hasItem(Items.fuel, 1, false));
+            inventory.setSlot(1, itemList.getIngots(), 2);
+            inventory.setSlot(2, itemList.getOre(), 4);
+            inventory.setSlot(3, itemList.getFuel(), 2);
+            Assertions.assertTrue(inventory.hasItem(itemList.getFuel(), 1, false));
         }
 
         @Test
         void contains_mixedInventory_false()
         {
             final Inventory inventory = new Inventory(5, 10);
-            inventory.setSlot(2, Items.ingots, 2);
-            inventory.setSlot(1, Items.ore, 4);
-            Assertions.assertFalse(inventory.hasItem(Items.fuel, 1, false));
+            inventory.setSlot(2, itemList.getIngots(), 2);
+            inventory.setSlot(1, itemList.getOre(), 4);
+            Assertions.assertFalse(inventory.hasItem(itemList.getFuel(), 1, false));
         }
     }
 
